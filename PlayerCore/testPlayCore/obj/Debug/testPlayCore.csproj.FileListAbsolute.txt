@@ -1,0 +1,10 @@
+D:\code\MusicPlayer\PlayerCore\testPlayCore\bin\Debug\testPlayCore.exe
+D:\code\MusicPlayer\PlayerCore\testPlayCore\bin\Debug\testPlayCore.pdb
+D:\code\MusicPlayer\PlayerCore\testPlayCore\bin\Debug\PlayerCore.dll
+D:\code\MusicPlayer\PlayerCore\testPlayCore\bin\Debug\PlayerCore.pdb
+D:\code\MusicPlayer\PlayerCore\testPlayCore\obj\Debug\testPlayCore.csprojResolveAssemblyReference.cache
+D:\code\MusicPlayer\PlayerCore\testPlayCore\obj\Debug\testPlayCore.Form1.resources
+D:\code\MusicPlayer\PlayerCore\testPlayCore\obj\Debug\testPlayCore.Properties.Resources.resources
+D:\code\MusicPlayer\PlayerCore\testPlayCore\obj\Debug\testPlayCore.csproj.GenerateResource.Cache
+D:\code\MusicPlayer\PlayerCore\testPlayCore\obj\Debug\testPlayCore.exe
+D:\code\MusicPlayer\PlayerCore\testPlayCore\obj\Debug\testPlayCore.pdb
