@@ -11,7 +11,10 @@ namespace PlayerCore
             FileName = filename;
             Format = filename.Substring(filename.LastIndexOf('.'));
         }
-
+        public MusicFile(MusicFile file) {
+            FileName = file.FileName;
+            Format = file.Format;
+        }
         public string FileName {
             set;
             get;

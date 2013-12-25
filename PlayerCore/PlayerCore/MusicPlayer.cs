@@ -19,16 +19,16 @@ namespace PlayerCore
         public MusicPlayer() {
             Init();
         }
-        private void _Play(string filePath) {
+        private void _play(string filePath) {
             m_player.OpenFile(filePath, TStreamFormat.sfAutodetect);
             m_player.StartPlayback();
             bMusicPlaying = true;
         }
         public void Play(string filePath) {
-            _Play(filePath);
+            _play(filePath);
         }
         public void Play(MusicFile musicFile) {
-            _Play(musicFile.FileName);
+            _play(musicFile.FileName);
         }
         public void Pause() {
             m_player.PausePlayback();
@@ -60,6 +60,7 @@ namespace PlayerCore
         public int MyCallbackFunc(uint objptr, int user_data,
             TCallbackMessage msg, uint param1, uint param2) {
             switch (msg) {
+                //播放完
                 case TCallbackMessage.MsgStop:
                     bMusicPlaying = false;
                     if (OnMusicEnd != null) {
