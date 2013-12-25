@@ -39,7 +39,12 @@ namespace APlayer
                 return;
             }
             this.timer1.Stop();
-            this.button1_Click(sender, e);
+            this.musicPlayer.PlayNext();
+            this.timer1.Start();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e) {
+            this.musicPlayer.Volume = ((HScrollBar)sender).Value;
         }
     }
 }

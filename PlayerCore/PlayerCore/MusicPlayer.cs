@@ -27,8 +27,8 @@ namespace PlayerCore
         public void Play(string filePath) {
             _Play(filePath);
         }
-        internal void Play(MusicFile musicFile) {
-            
+        public void Play(MusicFile musicFile) {
+            _Play(musicFile.FileName);
         }
         public void Pause() {
             m_player.PausePlayback();
@@ -42,6 +42,7 @@ namespace PlayerCore
         public int Volume {
             set {
                 m_volume = value;
+                m_volume %= 101;
                 m_player.SetPlayerVolume(value, value);
             }
             get {

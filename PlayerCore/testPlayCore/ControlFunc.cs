@@ -17,22 +17,31 @@ namespace APlayer
         }
         private void _Init() {
             musicPlayer = new PlayerCore.MusicPlayer();
+            musicList = new PlayerCore.MusicList();
+            m_currentIndex = 0;
+            musicPlayer.Volume = 15;
         }
         public bool ShowDlgAndPlay() {
             OpenFileDialog fileDlg = new OpenFileDialog();
             fileDlg.InitialDirectory = "c://";
             fileDlg.Filter = "音乐文件|" + musicPlayer.SUPPORTFORMAT;
             fileDlg.RestoreDirectory = true;
-
+            fileDlg.Multiselect = true;
             if (fileDlg.ShowDialog() == DialogResult.OK) {
-                musicPlayer.Volume = 15;
-                musicPlayer.Play(fileDlg.FileName);
+                musicList.Add(fileDlg.FileNames);
+                m_currentIndex = 0;
+                musicPlayer.Play(musicList[m_currentIndex].FileName);
                 return true;
             }
             return false;
         }
         public void Play(string fileName) {
             musicPlayer.Play(fileName);
+        }
+        public void PlayNext() {
+            m_currentIndex++;
+            m_currentIndex %= this.musicList.ListLength;
+            musicPlayer.Play(musicList[m_currentIndex]);
         }
         public void Pause() {
             musicPlayer.Pause();
@@ -43,9 +52,19 @@ namespace APlayer
         public void Stop() {
             musicPlayer.Stop();
         }
+        public int Volume {
+            get {
+                return musicPlayer.Volume;
+            }
+            set {
+                musicPlayer.Volume = value;
+            }
+        }
         public bool HasMusicPlaying() {
             return musicPlayer.bMusicPlaying;
         }
         private PlayerCore.MusicPlayer musicPlayer;
+        private PlayerCore.MusicList musicList;
+        private int m_currentIndex;
     }
 }
