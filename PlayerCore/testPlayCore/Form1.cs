@@ -7,38 +7,39 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace testPlayCore
+namespace APlayer
 {
     public partial class Form1 : Form
     {
         public Form1() {
             InitializeComponent();
+            musicPlayer = new MusicControlor();
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            musicPlayer = new PlayerCore.MusicPlayer();
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            OpenFileDialog fileDlg = new OpenFileDialog();
-            fileDlg.InitialDirectory = @"c:\";
-            fileDlg.Filter = "mp3音乐|*.mp3";
-            fileDlg.RestoreDirectory = true;
-            /*
-            if (fileDlg.ShowDialog() == DialogResult.OK) {
-                musicPlayer.Play(fileDlg.FileName);
+            if (musicPlayer.ShowDlgAndPlay()) {
+                this.timer1.Interval = 1000;
+                this.timer1.Start();
             }
-            */
-            musicPlayer.Play(@"d:\1.mp3");
         }
-        private PlayerCore.MusicPlayer musicPlayer;
-
+        private MusicControlor musicPlayer;
         private void button2_Click(object sender, EventArgs e) {
             musicPlayer.Pause();
         }
 
         private void button3_Click(object sender, EventArgs e) {
             musicPlayer.Resume();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e) {
+            if (musicPlayer.HasMusicPlaying()) {
+                return;
+            }
+            this.timer1.Stop();
+            this.button1_Click(sender, e);
         }
     }
 }

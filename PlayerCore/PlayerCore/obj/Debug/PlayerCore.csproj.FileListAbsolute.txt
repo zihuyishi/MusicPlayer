@@ -3,5 +3,4 @@ D:\code\MusicPlayer\PlayerCore\PlayerCore\bin\Debug\PlayerCore.dll
 D:\code\MusicPlayer\PlayerCore\PlayerCore\bin\Debug\PlayerCore.pdb
 D:\code\MusicPlayer\PlayerCore\PlayerCore\obj\Debug\PlayerCore.dll
 D:\code\MusicPlayer\PlayerCore\PlayerCore\obj\Debug\PlayerCore.pdb
-D:\code\MusicPlayer\PlayerCore\PlayerCore\obj\Debug\Interop.MediaPlayer.dll
 D:\code\MusicPlayer\PlayerCore\PlayerCore\obj\Debug\PlayerCore.csproj.ResolveComReference.cache

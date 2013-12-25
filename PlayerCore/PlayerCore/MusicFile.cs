@@ -5,14 +5,21 @@ using System.Text;
 
 namespace PlayerCore
 {
-    internal class MusicFile
+    public class MusicFile
     {
+        public MusicFile(string filename) {
+            FileName = filename;
+            Format = filename.Substring(filename.LastIndexOf('.'));
+        }
+
         public string FileName {
             set;
             get;
         }
-        public MusicFile(string filename) {
-            FileName = filename;
+
+        public string Format {
+            get;
+            set;
         }
     }
 }
