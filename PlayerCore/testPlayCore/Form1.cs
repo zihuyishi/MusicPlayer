@@ -13,46 +13,54 @@ namespace APlayer
     {
         public Form1() {
             InitializeComponent();
-            musicPlayer = new MusicControlor();
+            _musicPlayer = new MusicControlor();
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            this.hScrollBar1.Value = 100;
+            hScrollBar1.Value = 100;
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            musicPlayer.ShowDlgAndPlay();
+            _musicPlayer.ShowDlgAndPlay();
         }
-        private MusicControlor musicPlayer;
+        private readonly MusicControlor _musicPlayer;
         private void button2_Click(object sender, EventArgs e) {
-            musicPlayer.Pause();
+            _musicPlayer.Pause();
         }
 
         private void button3_Click(object sender, EventArgs e) {
-            musicPlayer.Resume();
+            _musicPlayer.Resume();
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e) {
-            this.musicPlayer.Volume = ((HScrollBar)sender).Value;
+            _musicPlayer.Volume = ((HScrollBar)sender).Value;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
             bool ret = ((CheckBox)sender).Checked;
-            this.musicPlayer.bRandom = ret;
+            _musicPlayer.RandomOrder = ret;
         }
 
         private void LoopRadioButton_CheckedChanged(object sender, EventArgs e) {
             string text = ((RadioButton)sender).Text;
             if (text == "LoopNo") {
-                this.musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopNo);
+                _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopNo);
             }
             if (text == "LoopAll") {
-                this.musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopAll);
+                _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopAll);
             }
             if (text == "LoopOnce") {
-                this.musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopOnce);
+                _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopOnce);
             }
 
+        }
+
+        private void button4_Click(object sender, EventArgs e) {
+            _musicPlayer.PlayNext(true);
+        }
+
+        private void button5_Click(object sender, EventArgs e) {
+            _musicPlayer.ShowDlgAndAdd();
         }
     }
 }

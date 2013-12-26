@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 namespace PlayerCore
@@ -8,14 +9,14 @@ namespace PlayerCore
     public class MusicList
     {
         private void _init() {
-            m_list = new List<MusicFile>();
+            _list = new List<MusicFile>();
         }
         public MusicList() {
-            this._init();
+            _init();
         }
         public MusicList(List<MusicFile> newlist) {
-            this._init();
-            m_list = newlist;
+            _init();
+            _list = newlist;
         }
         public void Add(params string[] filenames) {
             foreach (string filename in filenames) {
@@ -24,43 +25,50 @@ namespace PlayerCore
             
         }
         public void Add(params MusicFile[] files) {
-            m_list.AddRange(files);
+            _list.AddRange(files);
         }
         public bool Remove(int index) {
             if (index < 0 || index >= ListLength) {
                 return false;
             }
-            m_list.RemoveAt(index);
+            _list.RemoveAt(index);
             return true;
         }
         public bool Remove(MusicFile file) {
-            bool ret = false;
-            
-            return ret;
+            /*
+            int index = _list.FindIndex((musicFile) => musicFile.FileName == file.FileName);
+            if (index == -1) return false;
+            _list.RemoveAt(index);
+            */
+            return _list.Remove(file);
+        }
+
+        public void RemoveAll() {
+            _list.Clear();
         }
         public string GetFilePath(int index) {
             if (index < 0)
                 index = 0;
             if (index > ListLength)
                 index = ListLength - 1;
-            return m_list[index].FileName;
+            return _list[index].FileName;
         }
         public MusicFile this[int index] {
             get {
-                index %= m_list.Count;
-                return m_list[index];
+                index %= _list.Count;
+                return _list[index];
             }
             private set {
-                m_list[index] = value;
+                _list[index] = value;
             }
         }
         public int ListLength {
             get{
-                return m_list.Count;
+                return _list.Count;
             }
             
         }
 
-        private List<MusicFile> m_list;
+        private List<MusicFile> _list;
     }
 }

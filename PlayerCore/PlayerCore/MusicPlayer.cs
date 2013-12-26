@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Timers;
+using System.Windows.Forms;
 using libZPlay;
 
 namespace PlayerCore
@@ -12,41 +13,49 @@ namespace PlayerCore
     public class MusicPlayer
     {
         private void Init() {
-            m_player = new ZPlay();
-            CallbackFunc = new TCallbackFunc(MyCallbackFunc);
-            m_player.SetCallbackFunc(CallbackFunc, (TCallbackMessage)TCallbackMessage.MsgStop, 0);
+            _zPlayer = new ZPlay();
+            _callbackFunc = new TCallbackFunc(MyCallbackFunc);
+            _zPlayer.SetCallbackFunc(_callbackFunc, TCallbackMessage.MsgStop, 0);
         }
         public MusicPlayer() {
             Init();
         }
-        private void _play(string filePath) {
-            m_player.OpenFile(filePath, TStreamFormat.sfAutodetect);
-            m_player.StartPlayback();
-            bMusicPlaying = true;
+        private void _play(string filePath, 
+            TStreamFormat format = TStreamFormat.sfAutodetect)
+        {
+            bool ret = _zPlayer.OpenFile(filePath, format);
+            if (!ret) {
+                MessageBox.Show(_zPlayer.GetError());
+            }
+            ret = _zPlayer.StartPlayback();
+            if (!ret) {
+                MessageBox.Show(_zPlayer.GetError());
+            }
+            MusicPlaying = true;
         }
         public void Play(string filePath) {
             _play(filePath);
         }
         public void Play(MusicFile musicFile) {
-            _play(musicFile.FileName);
+            _play(musicFile.FileName, musicFile.Format);
         }
         public void Pause() {
-            m_player.PausePlayback();
+            _zPlayer.PausePlayback();
         }
         public void Resume() {
-            m_player.ResumePlayback();
+            _zPlayer.ResumePlayback();
         }
         public void Stop() {
-            m_player.StopPlayback();
+            _zPlayer.StopPlayback();
         }
         public int Volume {
             set {
-                m_volume = value;
-                m_volume %= 101;
-                m_player.SetPlayerVolume(value, value);
+                _volume = value;
+                _volume %= 101;
+                _zPlayer.SetPlayerVolume(value, value);
             }
             get {
-                return m_volume;
+                return _volume;
             }
         }
         private int leftVolume {
@@ -57,12 +66,12 @@ namespace PlayerCore
             set;
             get;
         }
-        public int MyCallbackFunc(uint objptr, int user_data,
+        public int MyCallbackFunc(uint objptr, int userdata,
             TCallbackMessage msg, uint param1, uint param2) {
             switch (msg) {
                 //播放完
                 case TCallbackMessage.MsgStop:
-                    bMusicPlaying = false;
+                    MusicPlaying = false;
                     if (OnMusicEnd != null) {
                         OnMusicEnd(new object(), EventArgs.Empty);
                     }
@@ -73,15 +82,14 @@ namespace PlayerCore
         /// <summary>
         /// 是否在播放音乐
         /// </summary>
-        public bool bMusicPlaying {
+        public bool MusicPlaying {
             get;
             set;
         }
         // global holder for our callback function, need this to prevent garbage collector to destroy our callback function
-        private TCallbackFunc CallbackFunc;
-        private ZPlay m_player;
-        private int m_volume;
+        private TCallbackFunc _callbackFunc;
+        private ZPlay _zPlayer;
+        private int _volume;
         public EventHandler OnMusicEnd;
-        public readonly string SUPPORTFORMAT = "*.MP3;*.FLAC;*.WAV;*.AAC;*.OGG";
     }
 }
