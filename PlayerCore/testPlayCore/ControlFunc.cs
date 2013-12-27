@@ -56,7 +56,7 @@ namespace APlayer
             _musicList.RemoveAll();
             _musicList.Add(files);
             _currentIndex = 0;
-            _play(_musicList[_currentIndex].FileName);
+            _play(_musicList[_currentIndex].FilePath);
             return true;
         }
         public void Play(string fileName) {
@@ -71,18 +71,22 @@ namespace APlayer
         /// <summary>
         /// 下个曲子
         /// </summary>
-        /// <param name="force">LoopOnce时是否改变</param>
+        /// <param name="force">主动播放下一首歌</param>
         /// <returns>-1表示没有获取正确曲子</returns>
         private int _nextIndex(bool force = false) {
             int index = _currentIndex;
+            //主动播放下一首歌
+            if (force) {
+                if (RandomOrder) {
+                    index = new Random().Next(_musicList.ListLength);
+                }
+                index++;
+                index %= _musicList.ListLength;
+                return index;
+            }
+            //被动播放下一首歌
             switch (_loopMode) {
                 case LoopMode.LoopOnce:
-                    if (force) {
-                        if (RandomOrder) {
-                            index = new Random().Next(_musicList.ListLength);
-                        }
-                        index++;
-                    }
                     break;
                 case LoopMode.LoopNo:
                     if (RandomOrder) {
@@ -112,7 +116,7 @@ namespace APlayer
                 return;
             }
             _currentIndex = index;
-            _play(_musicList[_currentIndex].FileName);
+            _play(_musicList[_currentIndex].FilePath);
         }
         public void Pause() {
             _musicPlayer.Pause();
@@ -122,6 +126,10 @@ namespace APlayer
         }
         public void Stop() {
             _musicPlayer.Stop();
+        }
+
+        public void SaveList() {
+            _musicList.SaveListToFile("musiclist.xml");
         }
         public int Volume {
             get {

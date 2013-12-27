@@ -16,6 +16,9 @@ namespace APlayer
             _musicPlayer = new MusicControlor();
         }
 
+        protected override void OnPaint(PaintEventArgs e) {
+            base.OnPaint(e);
+        }
         private void Form1_Load(object sender, EventArgs e) {
             hScrollBar1.Value = 100;
         }
@@ -62,5 +65,10 @@ namespace APlayer
         private void button5_Click(object sender, EventArgs e) {
             _musicPlayer.ShowDlgAndAdd();
         }
+
+        private void button6_Click(object sender, EventArgs e) {
+            _musicPlayer.SaveList();
+        }
+        
     }
 }

@@ -11,11 +11,15 @@ namespace PlayerCore
             _loadImformation(filename);
         }
         public MusicFile(MusicFile file) {
-            _loadImformation(file.FileName);
+            _loadImformation(file.FilePath);
         }
         private void _loadImformation(string filename) {
-            FileName = filename;
+            FilePath = filename;
             #region 获取文件信息
+            #region 获取歌曲名
+            string musicName = filename.Substring(filename.LastIndexOf('\\') + 1);
+            MusicName = musicName.Substring(0, musicName.LastIndexOf('.'));
+            #endregion
             #region 设置文件格式
             string format = filename.Substring(filename.LastIndexOf('.'));
             switch (format.ToLower()) {
@@ -54,20 +58,21 @@ namespace PlayerCore
         }
 
         public override string ToString() {
-            return FileName;
+            return FilePath;
         }
 
         public override int GetHashCode() {
-            return FileName.GetHashCode() * 37 + Minutes.GetHashCode();
+            return FilePath.GetHashCode() * 37 + Minutes.GetHashCode();
         }
         
         public bool Equals(MusicFile other) {
-            return other.FileName == FileName;
+            return other.FilePath == FilePath;
         }
         #endregion
         public uint Minutes { set; get; }
         public uint Seconds { set; get; }
-        public string FileName { set; get; }
+        public string FilePath { set; get; }
+        public string MusicName { set; get; }
         internal TStreamTime Length { get; set; }
         public TStreamFormat Format { get; set; }
         public static readonly string SupportFormat = "*.MP3;*.FLAC;*.WAV;*.AAC;*.OGG";

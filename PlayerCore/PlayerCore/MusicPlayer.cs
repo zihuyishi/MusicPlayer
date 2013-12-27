@@ -37,7 +37,7 @@ namespace PlayerCore
             _play(filePath);
         }
         public void Play(MusicFile musicFile) {
-            _play(musicFile.FileName, musicFile.Format);
+            _play(musicFile.FilePath, musicFile.Format);
         }
         public void Pause() {
             _zPlayer.PausePlayback();
