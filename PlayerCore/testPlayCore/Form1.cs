@@ -69,6 +69,10 @@ namespace APlayer
         private void button6_Click(object sender, EventArgs e) {
             _musicPlayer.SaveList();
         }
+
+        private void button7_Click(object sender, EventArgs e) {
+            _musicPlayer.LoadList();
+        }
         
     }
 }

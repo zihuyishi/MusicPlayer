@@ -27,8 +27,12 @@ namespace APlayer
             _loopMode = LoopMode.LoopNo;
         }
         #endregion
-
-        private bool _showDlgAndGetFile(out string[] files) {
+        /// <summary>
+        /// 显示文件浏览窗口并返回所选文件
+        /// </summary>
+        /// <param name="files">返回所选文件，外部不需要初始化</param>
+        /// <returns>是否有返回文件</returns>
+        private static bool _showDlgAndGetFile(out string[] files) {
             OpenFileDialog fileDlg = new OpenFileDialog {
                 InitialDirectory = "c://",
                 Filter = "音乐文件|" + MusicFile.SupportFormat,
@@ -55,7 +59,6 @@ namespace APlayer
             if (!bRet) return false;
             _musicList.RemoveAll();
             _musicList.Add(files);
-            _currentIndex = 0;
             _play(_musicList[_currentIndex].FilePath);
             return true;
         }
@@ -130,6 +133,10 @@ namespace APlayer
 
         public void SaveList() {
             _musicList.SaveListToFile("musiclist.xml");
+        }
+
+        public void LoadList() {
+            _musicList.LoadListFromFile("musiclist.xml");
         }
         public int Volume {
             get {

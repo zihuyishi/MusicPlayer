@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
+
 namespace PlayerCore
 {
     public class MusicList
@@ -43,11 +45,6 @@ namespace PlayerCore
             return true;
         }
         public bool Remove(MusicFile file) {
-            /*
-            int index = _list.FindIndex((musicFile) => musicFile.FilePath == file.FilePath);
-            if (index == -1) return false;
-            _list.RemoveAt(index);
-            */
             return _list.Remove(file);
         }
         /// <summary>
@@ -56,34 +53,58 @@ namespace PlayerCore
         /// <param name="xmlFilepath">目标文件</param>
         /// <returns>是否保存成功</returns>
         public bool SaveListToFile(string xmlFilepath) {
-            XmlDocument xmlDoc = new XmlDocument();
-            XmlDeclaration xmlDeclar = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            xmlDoc.AppendChild(xmlDeclar);
-            XmlElement xmlElement = xmlDoc.CreateElement("", ListName, "");
-            xmlDoc.AppendChild(xmlElement);
+            XDocument xDoc = new XDocument
+            {
+                Declaration = new XDeclaration("1.0", "UTF-8", null)
+            };
+            xDoc.Add(new XElement(ListName));
+            XElement xRoot = xDoc.Element(ListName);
             foreach (var musicfile in _list) {
-                XmlNode xmlRoot = xmlDoc.SelectSingleNode(ListName);
-                xmlElement = xmlDoc.CreateElement("MusicFile");
-                xmlElement.SetAttribute("musicname", musicfile.MusicName);
-                XmlNode xmlnode1 = xmlDoc.CreateNode("element", "filepath", "");
-                xmlnode1.InnerText = musicfile.FilePath;
-                xmlElement.AppendChild(xmlnode1);
-                xmlnode1 = xmlDoc.CreateNode("element", "filelength", "");
-                xmlnode1.InnerText = Convert.ToString(musicfile.Minutes) +
+                string filelength = Convert.ToString(musicfile.Minutes) +
                                      " : " + Convert.ToString(musicfile.Seconds);
-                xmlElement.AppendChild(xmlnode1);
-                //xmlElement.SetAttribute("filename", musicfile.FilePath);
-                Debug.Assert(xmlRoot != null, "xmlRoot != null");
-                xmlRoot.AppendChild(xmlElement);
+                XElement xElement =
+                    new XElement("MusicFile",
+                        new XElement("filepath", musicfile.FilePath),
+                        new XElement("filelength", filelength),
+                        new XAttribute("musicname", musicfile.MusicName));
+                Debug.Assert(xRoot != null, "xRoot != null");
+                xRoot.Add(xElement);
             }
             try {
-                xmlDoc.Save(xmlFilepath);
+                xDoc.Save(xmlFilepath);
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 return false;
             }
 
             return true;
+        }
+        /// <summary>
+        /// 加载音乐列表
+        /// </summary>
+        /// <param name="filepath">文件路径</param>
+        /// <returns>是否加载成功</returns>
+        public bool LoadListFromFile(string filepath) {
+            XmlDocument xmlDoc = new XmlDocument();
+            try {
+                xmlDoc.Load(filepath);
+            }
+            catch (Exception) {
+                return false;
+            }
+            XmlElement xmlRoot = xmlDoc.DocumentElement;
+            if (xmlRoot == null) return false;
+            ListName = xmlRoot.Name;
+            foreach (XmlNode xmlNode in xmlRoot) {
+                string listpath = (from XmlNode childNode in xmlNode
+                                   where childNode.Name.ToLower() == "filepath" 
+                                   select childNode.InnerText).FirstOrDefault();
+                if (listpath == null) continue;
+                MusicFile musicFile = new MusicFile(listpath);
+                if (musicFile.IsEmpty) continue;
+                _list.Add(musicFile);
+            }
+            return _list.Count() != 0;
         }
         public void RemoveAll() {
             _list.Clear();
