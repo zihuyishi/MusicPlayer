@@ -82,12 +82,21 @@ namespace PlayerCore
         /// <summary>
         /// 加载音乐列表
         /// </summary>
+<<<<<<< HEAD
         /// <param name="xmlFilepath">文件路径</param>
         /// <returns>是否加载成功</returns>
         public bool LoadListFromFile(string xmlFilepath) {
             XmlDocument xmlDoc = new XmlDocument();
             try {
                 xmlDoc.Load(xmlFilepath);
+=======
+        /// <param name="filepath">文件路径</param>
+        /// <returns>是否加载成功</returns>
+        public bool LoadListFromFile(string filepath) {
+            XmlDocument xmlDoc = new XmlDocument();
+            try {
+                xmlDoc.Load(filepath);
+>>>>>>> ec809b7beca8faf4a8032c4f6de79ca216c514a9
             }
             catch (Exception) {
                 return false;
