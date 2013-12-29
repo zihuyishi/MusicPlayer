@@ -74,10 +74,6 @@ namespace APlayer
         private void button7_Click(object sender, EventArgs e) {
             _musicPlayer.LoadList();
         }
-<<<<<<< HEAD
         private readonly MusicControlor _musicPlayer;
-=======
-        
->>>>>>> ec809b7beca8faf4a8032c4f6de79ca216c514a9
     }
 }

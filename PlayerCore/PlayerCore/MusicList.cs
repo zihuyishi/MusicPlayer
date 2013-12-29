@@ -32,7 +32,7 @@ namespace PlayerCore
             foreach (string filepath in filepaths) {
                 Add(new MusicFile(filepath));
             }
-            
+
         }
         public void Add(params MusicFile[] files) {
             _list.AddRange(files);
@@ -53,8 +53,7 @@ namespace PlayerCore
         /// <param name="xmlFilepath">目标文件</param>
         /// <returns>是否保存成功</returns>
         public bool SaveListToFile(string xmlFilepath) {
-            XDocument xDoc = new XDocument
-            {
+            XDocument xDoc = new XDocument {
                 Declaration = new XDeclaration("1.0", "UTF-8", null)
             };
             xDoc.Add(new XElement(ListName));
@@ -72,8 +71,7 @@ namespace PlayerCore
             }
             try {
                 xDoc.Save(xmlFilepath);
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 return false;
             }
 
@@ -82,23 +80,13 @@ namespace PlayerCore
         /// <summary>
         /// 加载音乐列表
         /// </summary>
-<<<<<<< HEAD
         /// <param name="xmlFilepath">文件路径</param>
         /// <returns>是否加载成功</returns>
         public bool LoadListFromFile(string xmlFilepath) {
             XmlDocument xmlDoc = new XmlDocument();
             try {
                 xmlDoc.Load(xmlFilepath);
-=======
-        /// <param name="filepath">文件路径</param>
-        /// <returns>是否加载成功</returns>
-        public bool LoadListFromFile(string filepath) {
-            XmlDocument xmlDoc = new XmlDocument();
-            try {
-                xmlDoc.Load(filepath);
->>>>>>> ec809b7beca8faf4a8032c4f6de79ca216c514a9
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 return false;
             }
             XmlElement xmlRoot = xmlDoc.DocumentElement;
@@ -106,7 +94,7 @@ namespace PlayerCore
             ListName = xmlRoot.Name;
             foreach (XmlNode xmlNode in xmlRoot) {
                 string listpath = (from XmlNode childNode in xmlNode
-                                   where childNode.Name.ToLower() == "filepath" 
+                                   where childNode.Name.ToLower() == "filepath"
                                    select childNode.InnerText).FirstOrDefault();
                 if (listpath == null) continue;
                 MusicFile musicFile = new MusicFile(listpath);
@@ -140,10 +128,10 @@ namespace PlayerCore
             }
         }
         public int ListLength {
-            get{
+            get {
                 return _list.Count;
             }
-            
+
         }
         public string ListName { get; set; }
         private List<MusicFile> _list;
