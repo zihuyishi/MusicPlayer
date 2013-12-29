@@ -30,6 +30,7 @@ namespace WPFAPlayer
             _musicPlayer = new MusicControlor();
             _isPlaying = false;
             _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopAll);
+            _buttonList = new List<Button>();
         }
         #endregion
         private MusicControlor _musicPlayer;
@@ -40,8 +41,13 @@ namespace WPFAPlayer
                 ((Button) sender).Content = "Play";
             }
             else {
-                if (!_musicPlayer.Play()) {
-                    if (!_musicPlayer.ShowDlgAndPlay()) return;
+                if (_musicPlayer.HasPlayingMusic()) {
+                    _musicPlayer.Resume();
+                }
+                else {
+                    if (!_musicPlayer.Play()) {
+                        if (!_musicPlayer.ShowDlgAndPlay()) return;
+                    }
                 }
                 ((Button) sender).Content = "Pause";
             }
@@ -53,9 +59,9 @@ namespace WPFAPlayer
         }
         #region 设置是否显示按钮
         private void SetButtonVisibility(Visibility buttonVisible) {
-            PlayButton.Visibility = buttonVisible;
-            AddMusicButton.Visibility = buttonVisible;
-            NextButton.Visibility = buttonVisible;
+            foreach (Button button in _buttonList) {
+                button.Visibility = buttonVisible;
+            }
         }
         #endregion
         private void MainGrid_OnMouseMove(object sender, MouseEventArgs e) {
@@ -76,6 +82,20 @@ namespace WPFAPlayer
 
         private void NextButton_OnClick(object sender, RoutedEventArgs e) {
             _musicPlayer.PlayNext(true);
+        }
+
+        private void AllFormButton_Loaded(object sender, RoutedEventArgs e) {
+            _buttonList.Add((Button) sender);
+        }
+
+        private List<Button> _buttonList;
+
+        private void LoadListButton_OnClick(object sender, RoutedEventArgs e) {
+            _musicPlayer.ShowDlgAndLoadList();
+        }
+
+        private void SaveListButton_OnClick(object sender, RoutedEventArgs e) {
+            _musicPlayer.ShowDlgAndSaveList();
         }
     }
 }

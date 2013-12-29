@@ -68,11 +68,11 @@ namespace APlayer
         }
 
         private void button6_Click(object sender, EventArgs e) {
-            _musicPlayer.SaveList();
+            _musicPlayer.SaveList("musiclist.xml");
         }
 
         private void button7_Click(object sender, EventArgs e) {
-            _musicPlayer.LoadList();
+            _musicPlayer.LoadList("musiclist.xml");
         }
         private readonly MusicControlor _musicPlayer;
     }

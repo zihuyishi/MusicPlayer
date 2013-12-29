@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using PlayerCore;
 
 namespace PlayControlor
@@ -45,6 +47,38 @@ namespace PlayControlor
             files = null;
             return false;
         }
+
+        public bool ShowDlgAndLoadList() {
+            OpenFileDialog fileDlg = new OpenFileDialog
+            {
+                InitialDirectory = "c://",
+                Filter = "音乐列表|*.list",
+                RestoreDirectory = true
+            };
+            if (fileDlg.ShowDialog() != DialogResult.OK) return false;
+            string file = fileDlg.FileName;
+            return _musicList.LoadListFromFile(file);
+        }
+
+        public bool ShowDlgAndSaveList() {
+            SaveFileDialog fileDlg = new SaveFileDialog
+            {
+                InitialDirectory = "c://",
+                Filter = "音乐列表|*.list",
+                RestoreDirectory = true
+            };
+            if (fileDlg.ShowDialog() != DialogResult.OK) return false;
+            string file = fileDlg.FileName;
+            return _musicList.SaveListToFile(file);
+        }
+
+        public bool LoadList(string filepath) {
+            return _musicList.LoadListFromFile(filepath);
+        }
+
+        public bool SaveList(string filepath) {
+            return _musicList.SaveListToFile(filepath);
+        }
         public int ShowDlgAndAdd() {
             string[] files;
             bool bRet = _showDlgAndGetFile(out files);
@@ -67,7 +101,7 @@ namespace PlayControlor
 
         public bool Play() {
             if (_musicList.IsEmpty()) return false;
-            Resume();
+            _play(_musicList[_currentIndex].FilePath);
             return true;
         }
         private void _play(string filePath) {
@@ -140,14 +174,6 @@ namespace PlayControlor
         public void Stop() {
             _musicPlayer.Stop();
         }
-
-        public void SaveList() {
-            _musicList.SaveListToFile("musiclist.xml");
-        }
-
-        public void LoadList() {
-            _musicList.LoadListFromFile("musiclist.xml");
-        }
         public int Volume {
             get {
                 return _musicPlayer.Volume;
@@ -156,11 +182,15 @@ namespace PlayControlor
                 _musicPlayer.Volume = value;
             }
         }
-        public bool HasMusicPlaying() {
-            return _musicPlayer.MusicPlaying;
+        /// <summary>
+        /// 是否有可以播放的音乐。
+        /// </summary>
+        /// <returns></returns>
+        public bool HasPlayingMusic() {
+            return _musicPlayer.HasPlayingMusic;
         }
         private void end_timer_Tick(object sender, EventArgs e) {
-            if (HasMusicPlaying()) {
+            if (HasPlayingMusic()) {
                 return;
             }
             _endtimer.Stop();

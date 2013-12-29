@@ -9,13 +9,21 @@
         <Grid.Background>
             <ImageBrush ImageSource="Images/DefaultBackground.jpg"/>
         </Grid.Background>
-    	<Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left"
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left"
                 Margin="504,10,0,0" VerticalAlignment="Top" 
                 Style="{StaticResource ButtonStyle}"
-                Click="PlayButton_OnClick"/>
+                Click="PlayButton_OnClick" Loaded="AllFormButton_Loaded"/>
         <Button x:Name="AddMusicButton" Content="Add" Style="{StaticResource ButtonStyle}" Margin="504,80,12,651"
-                VerticalAlignment="Top" Click="AddMusicButton_OnClick"/>
+                VerticalAlignment="Top" Click="AddMusicButton_OnClick"
+                Loaded="AllFormButton_Loaded"/>
         <Button x:Name="NextButton" Content="Next" HorizontalAlignment="Left" Margin="504,150,0,0" VerticalAlignment="Top"
-                Style="{StaticResource ButtonStyle}" Click="NextButton_OnClick"/>
+                Style="{StaticResource ButtonStyle}" Click="NextButton_OnClick"
+                Loaded="AllFormButton_Loaded"/>
+        <Button x:Name="LoadListButton" Content="LoadList" HorizontalAlignment="Left" Margin="442,220,0,0" VerticalAlignment="Top"
+                Style="{StaticResource ButtonStyle}" Click="LoadListButton_OnClick"
+                Loaded="AllFormButton_Loaded" Width="172"/>
+        <Button x:Name="SaveListButton" Content="SaveList" HorizontalAlignment="Left" Margin="442,290,0,0" VerticalAlignment="Top"
+                Style="{StaticResource ButtonStyle}" Click="SaveListButton_OnClick"
+                Loaded="AllFormButton_Loaded" Width="172"/>
     </Grid>
 </Window>

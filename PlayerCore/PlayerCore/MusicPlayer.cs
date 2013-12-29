@@ -31,7 +31,7 @@ namespace PlayerCore
             if (!ret) {
                 MessageBox.Show(_zPlayer.GetError());
             }
-            MusicPlaying = true;
+            HasPlayingMusic = true;
         }
         public void Play(string filePath) {
             _play(filePath);
@@ -71,7 +71,7 @@ namespace PlayerCore
             switch (msg) {
                 //播放完
                 case TCallbackMessage.MsgStop:
-                    MusicPlaying = false;
+                    HasPlayingMusic = false;
                     if (OnMusicEnd != null) {
                         OnMusicEnd(new object(), EventArgs.Empty);
                     }
@@ -80,9 +80,9 @@ namespace PlayerCore
             return 0;
         }
         /// <summary>
-        /// 是否在播放音乐
+        /// 是否有在播放的音乐
         /// </summary>
-        public bool MusicPlaying {
+        public bool HasPlayingMusic {
             get;
             set;
         }
