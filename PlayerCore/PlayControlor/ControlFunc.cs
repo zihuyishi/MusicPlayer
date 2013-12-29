@@ -61,13 +61,19 @@ namespace PlayControlor
             _play(_musicList[_currentIndex].FilePath);
             return true;
         }
-        public void Play(string fileName) {
-            _play(fileName);
+        public void Play(string filePath) {
+            _play(filePath);
         }
-        private void _play(string fileName) {
+
+        public bool Play() {
+            if (_musicList.IsEmpty()) return false;
+            Resume();
+            return true;
+        }
+        private void _play(string filePath) {
             _endtimer.Interval = 1000;
             _endtimer.Start();
-            _musicPlayer.Play(fileName);
+            _musicPlayer.Play(filePath);
         }
         #region 下一个曲子索引_nextIndex
         /// <summary>
@@ -77,12 +83,17 @@ namespace PlayControlor
         /// <returns>-1表示没有获取正确曲子</returns>
         private int _nextIndex(bool force = false) {
             int index = _currentIndex;
+            index++;
             //主动播放下一首歌
             if (force) {
                 if (RandomOrder) {
-                    index = new Random().Next(_musicList.ListLength);
+                    do {
+                        //如果只有一首歌...只能重复了
+                        if (_musicList.ListLength == 0) break;
+                        index = new Random().Next(_musicList.ListLength);
+                        //不然随机还是不要重复的好
+                    } while (index == _currentIndex);
                 }
-                index++;
                 index %= _musicList.ListLength;
                 return index;
             }

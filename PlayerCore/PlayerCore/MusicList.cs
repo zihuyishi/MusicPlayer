@@ -83,6 +83,7 @@ namespace PlayerCore
         /// <param name="xmlFilepath">文件路径</param>
         /// <returns>是否加载成功</returns>
         public bool LoadListFromFile(string xmlFilepath) {
+            this.RemoveAll();
             XmlDocument xmlDoc = new XmlDocument();
             try {
                 xmlDoc.Load(xmlFilepath);
@@ -105,6 +106,10 @@ namespace PlayerCore
         }
         public void RemoveAll() {
             _list.Clear();
+        }
+
+        public bool IsEmpty() {
+            return _list.Count == 0;
         }
         /// <summary>
         /// 获取歌曲文件位置

@@ -1,0 +1,21 @@
+﻿<Window x:Class="WPFAPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="APlayer" Height="825" Width="632"
+        BorderThickness="0" ResizeMode="NoResize">
+    <Grid Name="MainGrid" Opacity="0.85" MouseMove="MainGrid_OnMouseMove"
+          MouseLeave="MainGrid_OnMouseLeave" Loaded="MainGrid_Loaded"
+          MouseEnter="MainGrid_OnMouseEnter">
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/DefaultBackground.jpg"/>
+        </Grid.Background>
+    	<Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left"
+                Margin="504,10,0,0" VerticalAlignment="Top" 
+                Style="{StaticResource ButtonStyle}"
+                Click="PlayButton_OnClick"/>
+        <Button x:Name="AddMusicButton" Content="Add" Style="{StaticResource ButtonStyle}" Margin="504,80,12,651"
+                VerticalAlignment="Top" Click="AddMusicButton_OnClick"/>
+        <Button x:Name="NextButton" Content="Next" HorizontalAlignment="Left" Margin="504,150,0,0" VerticalAlignment="Top"
+                Style="{StaticResource ButtonStyle}" Click="NextButton_OnClick"/>
+    </Grid>
+</Window>
