@@ -33,8 +33,7 @@ namespace WPFAPlayer
             _buttonList = new List<Button>();
         }
         #endregion
-        private MusicControlor _musicPlayer;
-        private bool _isPlaying;
+
         private void PlayButton_OnClick(object sender, RoutedEventArgs e) {
             if (_isPlaying) {
                 _musicPlayer.Pause();
@@ -88,7 +87,7 @@ namespace WPFAPlayer
             _buttonList.Add((Button) sender);
         }
 
-        private List<Button> _buttonList;
+        
 
         private void LoadListButton_OnClick(object sender, RoutedEventArgs e) {
             _musicPlayer.ShowDlgAndLoadList();
@@ -97,5 +96,8 @@ namespace WPFAPlayer
         private void SaveListButton_OnClick(object sender, RoutedEventArgs e) {
             _musicPlayer.ShowDlgAndSaveList();
         }
+        private List<Button> _buttonList;
+        private MusicControlor _musicPlayer;
+        private bool _isPlaying;
     }
 }
