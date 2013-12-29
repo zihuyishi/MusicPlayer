@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using PlayControlor;
 
 namespace APlayer
 {
@@ -26,7 +27,7 @@ namespace APlayer
         private void button1_Click(object sender, EventArgs e) {
             _musicPlayer.ShowDlgAndPlay();
         }
-        private readonly MusicControlor _musicPlayer;
+        
         private void button2_Click(object sender, EventArgs e) {
             _musicPlayer.Pause();
         }
@@ -69,6 +70,10 @@ namespace APlayer
         private void button6_Click(object sender, EventArgs e) {
             _musicPlayer.SaveList();
         }
-        
+
+        private void button7_Click(object sender, EventArgs e) {
+            _musicPlayer.LoadList();
+        }
+        private readonly MusicControlor _musicPlayer;
     }
 }

@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlFunc.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,9 +94,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PlayerCore\PlayerCore.csproj">
-      <Project>{1af00e6c-cd12-4ade-8679-64cc277da4c6}</Project>
-      <Name>PlayerCore</Name>
+    <ProjectReference Include="..\PlayControlor\PlayControlor.csproj">
+      <Project>{1dcd7ef6-39fb-4f49-ad03-5e60f2bca0b4}</Project>
+      <Name>PlayControlor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
