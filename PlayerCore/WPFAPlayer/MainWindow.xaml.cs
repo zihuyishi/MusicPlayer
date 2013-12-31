@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using PlayControlor;
 
 namespace WPFAPlayer
@@ -30,7 +31,9 @@ namespace WPFAPlayer
             _musicPlayer = new MusicControlor();
             _isPlaying = false;
             _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopAll);
-            _buttonList = new List<Button>();
+            _buttonList = new List<Control>();
+            //自己工作听歌用....
+            _musicPlayer.Volume = 15;
         }
         #endregion
 
@@ -58,7 +61,7 @@ namespace WPFAPlayer
         }
         #region 设置是否显示按钮
         private void SetButtonVisibility(Visibility buttonVisible) {
-            foreach (Button button in _buttonList) {
+            foreach (var button in _buttonList) {
                 button.Visibility = buttonVisible;
             }
         }
@@ -80,11 +83,13 @@ namespace WPFAPlayer
         }
 
         private void NextButton_OnClick(object sender, RoutedEventArgs e) {
-            _musicPlayer.PlayNext(true);
+            if (_musicPlayer.PlayNext(true)) {
+                PlayButton.Content = "Pause";
+            }
         }
 
         private void AllFormButton_Loaded(object sender, RoutedEventArgs e) {
-            _buttonList.Add((Button) sender);
+            _buttonList.Add((Control)sender);
         }
 
         
@@ -96,8 +101,42 @@ namespace WPFAPlayer
         private void SaveListButton_OnClick(object sender, RoutedEventArgs e) {
             _musicPlayer.ShowDlgAndSaveList();
         }
-        private List<Button> _buttonList;
+        private void MainGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e) {
+            OpenFileDialog fileDlg = new OpenFileDialog
+            {
+                RestoreDirectory = true,
+                Filter = "图片文件|*.png;*.jpg"
+            };
+            if (fileDlg.ShowDialog() != true) return;
+            string filepath = fileDlg.FileName;
+            this.ChangeBackImage(filepath);
+        }
+        
+        #region 界面效果函数
+
+        private void ChangeBackImage(string imagePath) {
+            ImageSource imageSource = new BitmapImage(new Uri(imagePath));
+            int width = Convert.ToInt32(imageSource.Width),
+                height = Convert.ToInt32(imageSource.Height);
+            width = width*800/height;
+            height = 800;
+            this.Width = width;
+            this.Height = height;
+            this.MainGrid.Background = new ImageBrush(imageSource);
+        }
+
+        #endregion
+        private List<Control> _buttonList;
         private MusicControlor _musicPlayer;
         private bool _isPlaying;
+
+        private void VolumnProgressBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            double value = ((ProgressBar) sender).Value;
+            _musicPlayer.Volume = Convert.ToInt32(value);
+
+        }
+
+
+        
     }
 }

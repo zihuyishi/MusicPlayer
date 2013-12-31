@@ -125,11 +125,10 @@ namespace PlayerCore
         }
         public MusicFile this[int index] {
             get {
-                index %= _list.Count;
-                return _list[index];
+                return index < _list.Count ? _list[index] : MusicFile.Empty;
             }
             private set {
-                _list[index] = value;
+                if (index < _list.Count) _list[index] = value;
             }
         }
         public int ListLength {

@@ -7,14 +7,20 @@ namespace PlayerCore
 {
     public sealed class MusicFile: IEquatable<MusicFile>
     {
+        public static readonly MusicFile Empty;
         public MusicFile(string filename) {
             _loadImformation(filename);
         }
         public MusicFile(MusicFile file) {
             _loadImformation(file.FilePath);
         }
+
+        
         private void _loadImformation(string filename) {
             IsEmpty = true;
+            if (filename == string.Empty) {
+                return;
+            }
             FilePath = filename;
             #region 获取文件信息
             #region 设置文件时间
