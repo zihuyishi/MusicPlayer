@@ -95,6 +95,7 @@
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(219, 15);
             this.hScrollBar1.TabIndex = 3;
+            this.hScrollBar1.Value = 100;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
             // checkBox1

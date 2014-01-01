@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using PlayController;
+using VolumnBar;
 
 namespace WPFAPlayer
 {
@@ -135,8 +136,8 @@ namespace WPFAPlayer
             _musicPlayer.Volume = Convert.ToInt32(value);
 
         }
-
-
-        
+        private void VolumnBar_OnOnValueChanged(object sender, EventArgs e) {
+            _musicPlayer.Volume = ((VolumnBarControl) sender).Value;
+        }
     }
 }
