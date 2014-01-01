@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using PlayerCore;
 
-namespace PlayControlor
+namespace PlayController
 {
-    public class MusicControlor//: Form
+    public class MusicController//: Form
     {
-        public MusicControlor() {
+        public MusicController() {
             _Init();
         }
         #region _Init()初始化

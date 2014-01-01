@@ -94,9 +94,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PlayControlor\PlayControlor.csproj">
+    <ProjectReference Include="..\PlayControlor\PlayController.csproj">
       <Project>{1dcd7ef6-39fb-4f49-ad03-5e60f2bca0b4}</Project>
-      <Name>PlayControlor</Name>
+      <Name>PlayController</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

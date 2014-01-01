@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
-using PlayControlor;
+using PlayController;
 
 namespace WPFAPlayer
 {
@@ -28,12 +28,12 @@ namespace WPFAPlayer
         }
         #region 初始化函数
         private void Init() {
-            _musicPlayer = new MusicControlor();
+            _musicPlayer = new MusicController();
             _isPlaying = false;
-            _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopAll);
-            _buttonList = new List<Control>();
+            _musicPlayer.SetLoopMode(MusicController.LoopMode.LoopAll);
+            _controlList = new List<Control>();
             //自己工作听歌用....
-            _musicPlayer.Volume = 15;
+            //_musicPlayer.Volume = 15;
         }
         #endregion
 
@@ -60,9 +60,9 @@ namespace WPFAPlayer
             _musicPlayer.ShowDlgAndAdd();
         }
         #region 设置是否显示按钮
-        private void SetButtonVisibility(Visibility buttonVisible) {
-            foreach (var button in _buttonList) {
-                button.Visibility = buttonVisible;
+        private void SetControlVisibility(Visibility buttonVisible) {
+            foreach (var control in _controlList) {
+                control.Visibility = buttonVisible;
             }
         }
         #endregion
@@ -71,15 +71,15 @@ namespace WPFAPlayer
         }
 
         private void MainGrid_OnMouseLeave(object sender, MouseEventArgs e) {
-            SetButtonVisibility(Visibility.Hidden);
+            SetControlVisibility(Visibility.Hidden);
         }
 
         private void MainGrid_Loaded(object sender, RoutedEventArgs e) {
-            SetButtonVisibility(Visibility.Hidden);
+            SetControlVisibility(Visibility.Hidden);
         }
 
         private void MainGrid_OnMouseEnter(object sender, MouseEventArgs e) {
-            SetButtonVisibility(Visibility.Visible);
+            SetControlVisibility(Visibility.Visible);
         }
 
         private void NextButton_OnClick(object sender, RoutedEventArgs e) {
@@ -88,8 +88,8 @@ namespace WPFAPlayer
             }
         }
 
-        private void AllFormButton_Loaded(object sender, RoutedEventArgs e) {
-            _buttonList.Add((Control)sender);
+        private void AllFormControl_Loaded(object sender, RoutedEventArgs e) {
+            _controlList.Add((Control)sender);
         }
 
         
@@ -112,7 +112,7 @@ namespace WPFAPlayer
             this.ChangeBackImage(filepath);
         }
         
-        #region 界面效果函数
+        #region 界面效果方法s
 
         private void ChangeBackImage(string imagePath) {
             ImageSource imageSource = new BitmapImage(new Uri(imagePath));
@@ -126,8 +126,8 @@ namespace WPFAPlayer
         }
 
         #endregion
-        private List<Control> _buttonList;
-        private MusicControlor _musicPlayer;
+        private List<Control> _controlList;
+        private MusicController _musicPlayer;
         private bool _isPlaying;
 
         private void VolumnProgressBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {

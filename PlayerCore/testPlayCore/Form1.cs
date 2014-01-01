@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PlayControlor;
+using PlayController;
 
 namespace APlayer
 {
@@ -14,7 +14,7 @@ namespace APlayer
     {
         public Form1() {
             InitializeComponent();
-            _musicPlayer = new MusicControlor();
+            _musicPlayer = new MusicController();
         }
 
         protected override void OnPaint(PaintEventArgs e) {
@@ -48,13 +48,13 @@ namespace APlayer
         private void LoopRadioButton_CheckedChanged(object sender, EventArgs e) {
             string text = ((RadioButton)sender).Text;
             if (text == "LoopNo") {
-                _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopNo);
+                _musicPlayer.SetLoopMode(MusicController.LoopMode.LoopNo);
             }
             if (text == "LoopAll") {
-                _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopAll);
+                _musicPlayer.SetLoopMode(MusicController.LoopMode.LoopAll);
             }
             if (text == "LoopOnce") {
-                _musicPlayer.SetLoopMode(MusicControlor.LoopMode.LoopOnce);
+                _musicPlayer.SetLoopMode(MusicController.LoopMode.LoopOnce);
             }
 
         }
@@ -74,6 +74,6 @@ namespace APlayer
         private void button7_Click(object sender, EventArgs e) {
             _musicPlayer.LoadList("musiclist.xml");
         }
-        private readonly MusicControlor _musicPlayer;
+        private readonly MusicController _musicPlayer;
     }
 }

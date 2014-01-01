@@ -13,19 +13,19 @@
         <Button x:Name="PlayButton" Content="Play"
 			Margin="0,10,10,0" 
 			Style="{StaticResource ButtonStyle}"
-			Click="PlayButton_OnClick" Loaded="AllFormButton_Loaded"/>
+			Click="PlayButton_OnClick" Loaded="AllFormControl_Loaded"/>
         <Button x:Name="AddMusicButton" Content="Add"
 			Style="{StaticResource ButtonStyle}" Margin="0,80,10,0" 
 			Click="AddMusicButton_OnClick"
-			Loaded="AllFormButton_Loaded"/>
+			Loaded="AllFormControl_Loaded"/>
         <Button x:Name="NextButton" Content="Next"  Margin="0,150,10,0" 
 			Style="{StaticResource ButtonStyle}" Click="NextButton_OnClick"
-			Loaded="AllFormButton_Loaded"/>
+			Loaded="AllFormControl_Loaded"/>
         <Button x:Name="LoadListButton" Content="LoadList" Margin="0,220,10,0"
 			Style="{StaticResource ButtonStyle}" Click="LoadListButton_OnClick"
-			Loaded="AllFormButton_Loaded" Width="172"/>
+			Loaded="AllFormControl_Loaded" Width="172"/>
         <Button x:Name="SaveListButton" Content="SaveList" Margin="0,290,10,0"
 			Style="{StaticResource ButtonStyle}" Click="SaveListButton_OnClick"
-			Loaded="AllFormButton_Loaded" Width="172"/>
+			Loaded="AllFormControl_Loaded" Width="172"/>
     </Grid>
 </Window>

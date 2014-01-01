@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerCore", "PlayerCore\Pl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APlayer", "testPlayCore\APlayer.csproj", "{556B5E82-0E95-4F5A-A56B-87FCA123EA8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayControlor", "PlayControlor\PlayControlor.csproj", "{1DCD7EF6-39FB-4F49-AD03-5E60F2BCA0B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayController", "PlayControlor\PlayController.csproj", "{1DCD7EF6-39FB-4F49-AD03-5E60F2BCA0B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFAPlayer", "WPFAPlayer\WPFAPlayer.csproj", "{1D64D11E-1958-4F45-8640-9B461475A04F}"
 EndProject
