@@ -7,7 +7,7 @@
 #include <time.h>
 
 PlayController::PlayController():
-_currentindex(0), _loopmode(LoopOnce)
+_currentindex(0), _loopmode(LoopAll)
 {
 	
 }
@@ -19,7 +19,7 @@ PlayController::~PlayController()
 	
 }
 
-int PlayController::AddMusic(wchar_t* musicPath)
+int PlayController::AddMusic(const wchar_t* musicPath)
 {
 	MusicFile musicFile(musicPath);
 	_list.Add(musicFile);

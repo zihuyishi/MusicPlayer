@@ -16,11 +16,11 @@ enum LoopMode {
 	LoopOnce,
 	LoopRandom
 };
-
+const wchar_t SupportType[] = L"*.mp3;*.wav;";
 class IPlayController
 {
 public:
-	virtual int __stdcall AddMusic(wchar_t* musicPath) = 0;
+	virtual int __stdcall AddMusic(const wchar_t* musicPath) = 0;
 	virtual int __stdcall Play() = 0;
 	virtual int __stdcall Pause() = 0;
 	virtual int __stdcall Stop() = 0;

@@ -77,6 +77,7 @@ namespace WPFAPlayer
 
         private void MainGrid_Loaded(object sender, RoutedEventArgs e) {
             SetControlVisibility(Visibility.Hidden);
+            
         }
 
         private void MainGrid_OnMouseEnter(object sender, MouseEventArgs e) {
@@ -130,6 +131,8 @@ namespace WPFAPlayer
         private List<Control> _controlList;
         private MusicController _musicPlayer;
         private bool _isPlaying;
+        
+
 
         private void VolumnProgressBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             double value = ((ProgressBar) sender).Value;

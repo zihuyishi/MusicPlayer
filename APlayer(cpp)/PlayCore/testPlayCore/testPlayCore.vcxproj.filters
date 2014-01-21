@@ -15,55 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GacUI.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GacUIReflection.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GacUIWindows.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Vlpp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewSwitchingWindow.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GacUI.h">
+    <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GacUIReflection.h">
+    <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GacUIWindows.h">
+    <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Vlpp.h">
+    <ClInclude Include="testPlayCore.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="APlayerWindow.h">
+    <ClInclude Include="PlayCore.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LFileDialog.h">
+    <ClInclude Include="..\PlayCore\LyricFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LStdDef.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewSwitchingWindow.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\ScopeGuard.h">
+    <ClInclude Include="..\LyricsForm\LyricsForm.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\Debug\PlayCore.lib" />
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="testPlayCore.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PlayCore\LyricFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="testPlayCore.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="testPlayCore.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="PlayCore.lib" />
+    <Library Include="..\Debug\LyricsForm.lib" />
   </ItemGroup>
 </Project>

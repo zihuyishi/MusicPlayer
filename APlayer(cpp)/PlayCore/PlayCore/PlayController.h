@@ -14,7 +14,7 @@ public:
 	PlayController();
 	~PlayController();
 public:
-	int __stdcall AddMusic(wchar_t* musicPath);
+	int __stdcall AddMusic(const wchar_t* musicPath);
 	int __stdcall Play();
 	int __stdcall Pause();
 	int __stdcall Stop();
