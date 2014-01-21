@@ -26,10 +26,12 @@ namespace PlayerCore
             bool ret = _zPlayer.OpenFile(filePath, format);
             if (!ret) {
                 MessageBox.Show(_zPlayer.GetError());
+                return;
             }
             ret = _zPlayer.StartPlayback();
             if (!ret) {
                 MessageBox.Show(_zPlayer.GetError());
+                return;
             }
             HasPlayingMusic = true;
         }
