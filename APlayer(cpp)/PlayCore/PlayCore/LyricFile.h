@@ -14,7 +14,7 @@ typedef struct {
 	{
 		return ToMillisecond();
 	}
-	inline int ToMillisecond()
+	inline size_t ToMillisecond()
 	{
 		return (minute * 60 + second) * 1000 + millisecond;
 	}
@@ -32,15 +32,18 @@ public:
 	~LyricFile()
 	{}
 	void GetLyric(std::wstring filePath);
+	std::wstring NowLyric(size_t millisecond);
 	void Release() { 
 		_filePath.clear();
 		_lyrics.clear();
 		_extrainfo.clear();
+		_lyricindex.clear();
 	}
 private:
 	std::wstring _filePath;
 	std::vector<LyricLine> _lyrics;
 	std::vector<std::wstring> _extrainfo;
+	std::vector<int>	_lyricindex;
 };
 
 PLAYCORE_END

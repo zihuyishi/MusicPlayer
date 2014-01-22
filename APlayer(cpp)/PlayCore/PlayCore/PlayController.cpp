@@ -6,19 +6,18 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 PlayController::PlayController():
 _currentindex(0), _loopmode(LoopAll)
 {
-	
 }
 
 
 PlayController::~PlayController()
 {
 	
-	
 }
-
+//IPlayerController Method
 int PlayController::AddMusic(const wchar_t* musicPath)
 {
 	MusicFile musicFile(musicPath);
@@ -49,6 +48,9 @@ void PlayController::Release()
 	delete this;
 }
 
+
+
+//private method
 int PlayController::getNextIndex()
 {
 	int listLen = _list.ListLength();
@@ -75,10 +77,6 @@ int PlayController::getNextIndex()
 	return _currentindex;
 }
 
-int __stdcall PlayController::ShowLyric()
-{
-	LyricForm_Run();
-	_lyric.GetLyric(L"d:\\lyric\\1.lrc");
-	LyricForm_SetLyric(L"test");
-	return 0;
-}
+
+
+

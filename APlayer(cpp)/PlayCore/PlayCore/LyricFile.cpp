@@ -63,4 +63,20 @@ void LyricFile::GetLyric(std::wstring filePath)
 	}
 
 }
+std::wstring LyricFile::NowLyric(size_t millisecond)
+{
+	wstring ret(L"");
+	size_t index;
+	for (index = 0; index < _lyrics.size(); ++index) {
+		if (_lyrics[index].time.ToMillisecond() > millisecond)
+		{
+			index--;
+			if (index > 0){
+				ret = _lyrics[index].lyric;
+			}
+			break;
+		}
+	}
+	return ret;
+}
 PLAYCORE_END

@@ -16,6 +16,7 @@ public:
 
 private:
 	wstring _filePath;
+	wstring _lyricPath;
 private:
 	void setInformation();
 };
