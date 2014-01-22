@@ -15,7 +15,7 @@ DWORD WINAPI LyricFormThread(LPVOID lpParam)
 {
 	
 	MSG msg;
-	wndMain.Create();
+	wndMain.Create(L"¸è´Ê", WS_OVERLAPPEDWINDOW);
 	wndMain.ShowWindow(SW_SHOW);
 	wndMain.UpdataWindow();
 
@@ -29,6 +29,10 @@ DWORD WINAPI LyricFormThread(LPVOID lpParam)
 
 LYRIC_API void __stdcall LyricForm_Run()
 {
+	if (IsWindow(wndMain.Window())) {
+		wndMain.ShowWindow(SW_SHOW);
+		return;
+	}
 	HANDLE hThread;
 	DWORD dwThreadId;
 	hThread = CreateThread(

@@ -23,17 +23,25 @@ class LyricForm
 {
 public:
 	HWND m_hWnd;
+	typedef LyricForm ThisType;
 public:
-	LyricForm() :
-		szTitle(L"¸è´Ê"),
-		szWindowClass(L"AplayerLyricFormClass")
+	LyricForm()
 	{}
 	~LyricForm()
 	{}
 public:
-	HWND Create()
+	BOOL Create(
+		PCWSTR lpWindowName,
+		DWORD dwStyle,
+		DWORD dwExStyle = 0,
+		int x = CW_USEDEFAULT,
+		int y = CW_USEDEFAULT,
+		int nWidth = CW_USEDEFAULT,
+		int nHeight = CW_USEDEFAULT,
+		HWND hWndParent = 0,
+		HMENU hMenu = 0)
 	{
-		HINSTANCE hInstance = GetModuleHandleW(MyDllName);
+		HINSTANCE hInstance = GetModuleHandleW(NULL);
 		WNDCLASSEX wcex;
 		wcex.cbSize = sizeof(WNDCLASSEX);
 
@@ -46,17 +54,17 @@ public:
 		wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 		wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
 		wcex.lpszMenuName = NULL;
-		wcex.lpszClassName = szWindowClass.c_str();
+		wcex.lpszClassName = ClassName();
 		wcex.hIconSm = NULL;
 		RegisterClassEx(&wcex);
 
-		m_hWnd = CreateWindow(szWindowClass.c_str(), szTitle.c_str(), WS_OVERLAPPEDWINDOW,
-			CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
-		if (!m_hWnd) {
-			return NULL;
-		}
-		return m_hWnd;
+		m_hWnd = CreateWindowEx(
+			dwExStyle, ClassName(), lpWindowName, dwStyle, x,
+			y, nWidth, nHeight, hWndParent, hMenu, hInstance, this);
+		//DWORD ret = GetLastError();
+		return (m_hWnd ? TRUE : FALSE);
 	}
+	HWND Window() const { return m_hWnd; }
 	BOOL ShowWindow(int nCmdShow)
 	{
 		if (IsWindow(m_hWnd)) {
@@ -71,17 +79,38 @@ public:
 public:
 	static LRESULT	CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
+		ThisType *pThis = NULL;
+		if (message == WM_NCCREATE) {
+			CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
+			pThis = (ThisType*)pCreate->lpCreateParams;
+			SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pThis);
+
+			pThis->m_hWnd = hWnd;
+		}
+		else {
+			pThis = (ThisType*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+		}
+		if (pThis) {
+			return pThis->HandleMessage(message, wParam, lParam);
+		}
+		else {
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+
+	}
+	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
+	{
 		switch (message)
 		{
 		case WM_PAINT:
-			PaintLyric(hWnd);
+			PaintLyric();
 			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
 		case CM_LYRIC:
 			SetLyric(std::wstring((wchar_t*)wParam));
-			PaintLyric(hWnd);
+			PaintLyric();
 			break;
 		case CM_FONTCOLOR:
 			SetFontColor(MakeColor((DWORD)wParam, (DWORD)lParam));
@@ -90,19 +119,19 @@ public:
 			SetFontSize((float)wParam);
 			break;
 		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
+			return DefWindowProc(m_hWnd, message, wParam, lParam);
 		}
 		return 0;
 	}
-	static void PaintLyric(HWND hWnd)
+	void PaintLyric()
 	{
 		IWriteText *writeText = CreateDirect2DDrawText();
 		RECT rc;
-		GetClientRect(hWnd, &rc);
-		writeText->WriteText(hWnd, szLyric, rc, fontsize, fontcolor);
+		GetClientRect(m_hWnd, &rc);
+		writeText->WriteText(m_hWnd, szLyric, rc, fontsize, fontcolor);
 		writeText->Release();
 	}
-	static void SetLyric(const std::wstring &lyric)
+	void SetLyric(const std::wstring &lyric)
 	{
 		szLyric = lyric;
 	}
@@ -128,8 +157,9 @@ public:
 		return retcolor;
 	}
 private:
+	LPCWSTR ClassName() const { return L"Lyric Window Class"; }
+private:
 	std::wstring szWindowClass;
-	std::wstring szTitle;
 	static std::wstring szLyric;
 	static float fontsize;
 	static Color fontcolor;

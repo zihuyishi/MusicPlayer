@@ -29,7 +29,7 @@ private:
 	int				_currentindex;
 
 private:
-	int				 getNextIndex();
+	int				getNextIndex();
 
 
 };
