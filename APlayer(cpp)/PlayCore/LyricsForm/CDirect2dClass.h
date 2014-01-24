@@ -3,6 +3,7 @@
 #include <dwrite.h>
 #pragma comment(lib, "dwrite.lib")
 #include "DrawLibrary.h"
+using namespace LDrawLib;
 #include <iostream>
 #include "..\Common\ScopeGuard.h"
 
@@ -32,7 +33,7 @@ public:
 		const RECT &rc, float fontSize = 12.0f,
 		Color fontcolor = { 0, 0, 0, 1.0f });
 	HRESULT OnFormChange();
-	void Release() { delete this; }
+	void	Release() { delete this; }
 //uncopyable
 private:
 	CDirect2dClass(const CDirect2dClass&){}
@@ -56,7 +57,7 @@ private:
 	D2D1::ColorF			_backColor			= D2D1::ColorF::White;
 };
 
-IWriteText *CreateDirect2DDrawText(HWND hWnd)
+IWriteText* LDrawLib::CreateDirect2DDrawText(HWND hWnd)
 {
 	CDirect2dClass *pD2C = new CDirect2dClass();
 	pD2C->SetTargetHwnd(hWnd);

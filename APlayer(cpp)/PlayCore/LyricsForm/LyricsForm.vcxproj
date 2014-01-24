@@ -82,6 +82,7 @@
   <ItemGroup>
     <ClInclude Include="..\Common\ScopeGuard.h" />
     <ClInclude Include="CDirect2dClass.h" />
+    <ClInclude Include="CGdiplusClass.h" />
     <ClInclude Include="DrawLibrary.h" />
     <ClInclude Include="LyricFormClass.h" />
     <ClInclude Include="LyricsForm.h" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDirect2dClass.cpp" />
+    <ClCompile Include="CGdiplusClass.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

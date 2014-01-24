@@ -1,5 +1,6 @@
 #ifndef APLAYER_LYRICSFORM_HEADER
 #define APLAYER_LYRICSFORM_HEADER
+
 #ifdef LYRIC_API
 //µ¼³öº¯Êý
 #else

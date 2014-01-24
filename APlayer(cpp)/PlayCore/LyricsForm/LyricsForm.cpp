@@ -5,7 +5,7 @@
 
 
 //Dll source code file exports functions and variables.
-#define APLAY_API extern "C" __declspec(dllexport)
+#define LYRIC_API extern "C" __declspec(dllexport)
 #include "LyricsForm.h"
 
 #include "LyricFormClass.h"
@@ -65,6 +65,7 @@ private:
 private:
 	LyricForm	_wndMain;
 };
+
 ILyricFormController* __stdcall CreateLyricFormController()
 {
 	LyricFormController* controller = new LyricFormController();

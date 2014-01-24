@@ -76,7 +76,8 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_CREATE:
-		_writeText = CreateDirect2DDrawText(m_hWnd);
+		_writeText = LDrawLib::CreateDirect2DDrawText(m_hWnd);
+		//_writeText = LDrawLib::CreateGdiplusDrawText(m_hWnd);
 		break;
 	case WM_PAINT:
 		PaintLyric();

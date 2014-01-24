@@ -2,7 +2,6 @@
 #include "DrawLibrary.h"
 
 
-
 #ifndef APLAYER_LYRICFORMCLASS_HEADER
 #define APLAYER_LYRICFORMCLASS_HEADER
 
@@ -59,12 +58,12 @@ public:
 	void		PaintLyric();
 	inline void SetLyric(const std::wstring &lyric) { szLyric = lyric; }
 	inline void SetFontSize(float inSize) { fontsize = inSize; }
-	inline void SetFontColor(Color color) { fontcolor = color; }
+	inline void SetFontColor(LDrawLib::Color color) { fontcolor = color; }
 private:
 
-	Color MakeColor(DWORD dwColor, DWORD dwAplend = 255)
+	LDrawLib::Color MakeColor(DWORD dwColor, DWORD dwAplend = 255)
 	{
-		Color retcolor;
+		LDrawLib::Color retcolor;
 		DWORD red		= (dwColor & 0xFF0000) >> 16;
 		DWORD green		= (dwColor & 0x00FF00) >> 8;
 		DWORD blue		= (dwColor & 0x0000FF) >> 0;
@@ -78,11 +77,11 @@ private:
 private:
 	LPCWSTR ClassName() const { return L"Lyric Window Class"; }
 private:
-	IWriteText*		_writeText;
+	LDrawLib::IWriteText*		_writeText;
 
 	std::wstring szWindowClass;
 	std::wstring szLyric = L"";
 	float fontsize = 20.0f;
-	Color fontcolor;
+	LDrawLib::Color fontcolor;
 };
 #endif
