@@ -26,7 +26,8 @@ public:
 	typedef LyricForm ThisType;
 public:
 	LyricForm()
-	{}
+	{
+	}
 	~LyricForm()
 	{}
 public:
@@ -102,10 +103,14 @@ public:
 	{
 		switch (message)
 		{
+		case WM_CREATE:
+			_writeText = CreateDirect2DDrawText(m_hWnd);
+			break;
 		case WM_PAINT:
 			PaintLyric();
 			break;
 		case WM_DESTROY:
+			_writeText->Release();
 			PostQuitMessage(0);
 			break;
 		case CM_LYRIC:
@@ -125,11 +130,12 @@ public:
 	}
 	void PaintLyric()
 	{
-		IWriteText *writeText = CreateDirect2DDrawText();
+		PAINTSTRUCT ps;
+		BeginPaint(m_hWnd, &ps);
 		RECT rc;
 		GetClientRect(m_hWnd, &rc);
-		writeText->WriteText(m_hWnd, szLyric, rc, fontsize, fontcolor);
-		writeText->Release();
+		_writeText->WriteText(szLyric, rc, fontsize, fontcolor);
+		EndPaint(m_hWnd, &ps);
 	}
 	void SetLyric(const std::wstring &lyric)
 	{
@@ -159,6 +165,8 @@ public:
 private:
 	LPCWSTR ClassName() const { return L"Lyric Window Class"; }
 private:
+	IWriteText*		_writeText;
+
 	std::wstring szWindowClass;
 	static std::wstring szLyric;
 	static float fontsize;

@@ -14,24 +14,26 @@ class CDirect2dClass :
 public IWriteText
 {
 public:
-	CDirect2dClass() :
-		_pD2DFactory(NULL), _pRT(NULL)
-	{}
+	CDirect2dClass();
 	~CDirect2dClass();
+private:
+	HRESULT CreateD2DResource();
+	HRESULT CreateFactory();
+	void DiscardD2DResource();
 public:
-	HRESULT DrawRectangle(HWND hWnd, const RECT &rc, 
+	HRESULT DrawRectangle(const RECT &rc, 
 		Color color = { 0, 0, 0 , 1.0f});
 	HRESULT DrawEllipse();
-	HRESULT WriteText(HWND hWnd, const std::wstring& inText,
+	HRESULT WriteText(const std::wstring& inText,
 		const RECT &rc, float fontSize = 12.0f,
-		Color color = { 0, 0, 0, 1.0f });
+		Color fontcolor = { 0, 0, 0, 1.0f });
+	void SetTargetHwnd(HWND hWnd);
 	void Release() { delete this; }
 //uncopyable
 private:
 	CDirect2dClass(const CDirect2dClass&){}
 	CDirect2dClass& operator=(const CDirect2dClass&) {}
 private:
-	HRESULT CreateDevice(HWND _hWnd);
 	inline D2D1::ColorF ConvertToColor(Color color)
 	{
 		D2D1::ColorF _color(
@@ -43,12 +45,16 @@ private:
 		return _color;
 	}
 private:
-	ID2D1Factory*			_pD2DFactory;
-	ID2D1HwndRenderTarget*	_pRT;
+	ID2D1Factory*			_pD2DFactory		= NULL;
+	IDWriteFactory*			_pDWriteFactory		= NULL;
+	ID2D1HwndRenderTarget*	_pRT				= NULL;
+	HWND					_hWnd				= NULL;
+	D2D1::ColorF			_backColor			= D2D1::ColorF::White;
 };
-IWriteText *CreateDirect2DDrawText()
+IWriteText *CreateDirect2DDrawText(HWND hWnd)
 {
 	CDirect2dClass *pD2C = new CDirect2dClass();
+	pD2C->SetTargetHwnd(hWnd);
 	return (IWriteText*)pD2C;
 }
 

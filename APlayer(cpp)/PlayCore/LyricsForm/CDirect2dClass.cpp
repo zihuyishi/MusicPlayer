@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CDirect2dClass.h"
 
-
+//SafeRelease
 template<class Interface>
 inline void SafeRelease(
 	Interface **ppInterfaceToRelease
@@ -14,38 +14,70 @@ inline void SafeRelease(
 		(*ppInterfaceToRelease) = NULL;
 	}
 }
+/***
+Construct and Deconstruct Methods
+*/
+CDirect2dClass::CDirect2dClass()
+{
+	CreateFactory();
+}
 CDirect2dClass::~CDirect2dClass()
 {
 	SafeRelease(&_pD2DFactory);
-	SafeRelease(&_pRT);
+	SafeRelease(&_pDWriteFactory);
+	DiscardD2DResource();
 }
-HRESULT CDirect2dClass::CreateDevice(HWND _hWnd)
+/***
+Direct2D Resource Function
+*/
+HRESULT CDirect2dClass::CreateFactory()
 {
 	HRESULT hr = S_OK;
-	SafeRelease(&_pD2DFactory);
-	SafeRelease(&_pRT);
 	hr = D2D1CreateFactory(
 		D2D1_FACTORY_TYPE_SINGLE_THREADED,
 		&_pD2DFactory);
-	RECT _rc;
-	GetClientRect(_hWnd, &_rc);
-	hr = _pD2DFactory->CreateHwndRenderTarget(
-		D2D1::RenderTargetProperties(),
-		D2D1::HwndRenderTargetProperties(
-		_hWnd,
-		D2D1::SizeU(
-		_rc.right - _rc.left,
-		_rc.bottom - _rc.top)),
-		&_pRT);
+	hr = DWriteCreateFactory(
+		DWRITE_FACTORY_TYPE_SHARED,
+		__uuidof(IDWriteFactory),
+		reinterpret_cast<IUnknown**>(&_pDWriteFactory)
+		);
 	return hr;
 }
-HRESULT CDirect2dClass::DrawRectangle(HWND hWnd, const RECT &rc, Color color)
+HRESULT CDirect2dClass::CreateD2DResource()
 {
 	HRESULT hr = S_OK;
-	hr = CreateDevice(hWnd);
+	if (_pRT == NULL) {
+		RECT _rc;
+		GetClientRect(_hWnd, &_rc);
+		D2D1_SIZE_U size = D2D1::SizeU(_rc.right, _rc.bottom);
+
+		hr = _pD2DFactory->CreateHwndRenderTarget(
+			D2D1::RenderTargetProperties(),
+			D2D1::HwndRenderTargetProperties(_hWnd, size),
+			&_pRT);
+	}
+	return hr;
+}
+void CDirect2dClass::DiscardD2DResource()
+{
+	SafeRelease(&_pRT);
+}
+
+/****
+public methods
+*/
+void CDirect2dClass::SetTargetHwnd(HWND hWnd)
+{
+	_hWnd = hWnd;
+	DiscardD2DResource();
+}
+HRESULT CDirect2dClass::DrawRectangle(const RECT &rc, Color color)
+{
+	HRESULT hr = S_OK;
+	hr = CreateD2DResource();
 	if (FAILED(hr)) return hr;
 
-	ID2D1SolidColorBrush* pBrush = NULL;
+	ID2D1SolidColorBrush*	pBrush = NULL;
 	ON_SCOPE_EXIT([&]{ SafeRelease(&pBrush); });
 
 	hr = _pRT->CreateSolidColorBrush(
@@ -53,7 +85,7 @@ HRESULT CDirect2dClass::DrawRectangle(HWND hWnd, const RECT &rc, Color color)
 		&pBrush
 		);
 	_pRT->BeginDraw();
-	
+	_pRT->Clear(D2D1::ColorF(_backColor));
 	_pRT->DrawRectangle(
 		D2D1::RectF(
 		(float)rc.left, 
@@ -63,31 +95,27 @@ HRESULT CDirect2dClass::DrawRectangle(HWND hWnd, const RECT &rc, Color color)
 		pBrush
 		);
 	hr = _pRT->EndDraw();
+	if (FAILED(hr) || hr == D2DERR_RECREATE_TARGET) {
+		DiscardD2DResource();
+	}
 	return hr;
 }
-HRESULT CDirect2dClass::WriteText(HWND hWnd, const std::wstring& inText, const RECT &rc, float fontSize, Color color)
+HRESULT CDirect2dClass::WriteText(const std::wstring& inText, const RECT &rc, float fontSize, Color fontcolor)
 {
 	HRESULT hr = S_OK;
+
+	hr = CreateD2DResource();
+	if (FAILED(hr)) return hr;
+
 	ID2D1SolidColorBrush*	pBrush = NULL;
-	IDWriteFactory*			pDWriteFactory = NULL;
 	IDWriteTextFormat*		pTextFormat = NULL;
 	ON_SCOPE_EXIT([&] { 
 		SafeRelease(&pBrush);
-		SafeRelease(&pDWriteFactory);
 		SafeRelease(&pTextFormat);
 	});
-	hr = CreateDevice(hWnd);
-	if (FAILED(hr)) return hr;
-
-	hr = DWriteCreateFactory(
-		DWRITE_FACTORY_TYPE_SHARED,
-		__uuidof(IDWriteFactory),
-		reinterpret_cast<IUnknown**>(&pDWriteFactory)
-		);
-	if (FAILED(hr)) return hr;
 
 	UINT32 cTextLength = (UINT32)inText.length();
-	hr = pDWriteFactory->CreateTextFormat(
+	hr = _pDWriteFactory->CreateTextFormat(
 		L"Î¢ÈíÑÅºÚ",
 		NULL,
 		DWRITE_FONT_WEIGHT_REGULAR,
@@ -100,7 +128,7 @@ HRESULT CDirect2dClass::WriteText(HWND hWnd, const std::wstring& inText, const R
 	hr = pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 	hr = pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-	D2D1::ColorF brushColor = ConvertToColor(color);
+	D2D1::ColorF brushColor = ConvertToColor(fontcolor);
 	hr = _pRT->CreateSolidColorBrush(
 		D2D1::ColorF(brushColor),
 		&pBrush
@@ -114,6 +142,7 @@ HRESULT CDirect2dClass::WriteText(HWND hWnd, const std::wstring& inText, const R
 		static_cast<float>(rc.bottom - rc.top)
 		);
 	_pRT->BeginDraw();
+	_pRT->Clear(D2D1::ColorF(_backColor));
 	_pRT->DrawTextW(
 		inText.c_str(),
 		cTextLength,
@@ -121,6 +150,9 @@ HRESULT CDirect2dClass::WriteText(HWND hWnd, const std::wstring& inText, const R
 		layoutRect,
 		pBrush
 		);
-	_pRT->EndDraw();
+	hr = _pRT->EndDraw();
+	if (FAILED(hr) || hr == D2DERR_RECREATE_TARGET) {
+		DiscardD2DResource();
+	}
 	return hr;
 }
