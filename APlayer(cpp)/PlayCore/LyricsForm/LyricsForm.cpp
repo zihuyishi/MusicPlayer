@@ -9,47 +9,64 @@
 #include "LyricsForm.h"
 
 #include "LyricFormClass.h"
-LyricForm wndMain;
-
-DWORD WINAPI LyricFormThread(LPVOID lpParam)
+class LyricFormController :
+	public ILyricFormController
 {
-	
-	MSG msg;
-	wndMain.Create(L"¸è´Ê", WS_OVERLAPPEDWINDOW);
-	wndMain.ShowWindow(SW_SHOW);
-	wndMain.UpdataWindow();
-
-	while (GetMessage(&msg, NULL, 0, 0))
+public:
+	typedef LyricFormController MyType;
+public:
+	//ILyricFormController method
+	void __stdcall LyricForm_Run()
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-	return 0;
-}
+		if (IsWindow(_wndMain.Window())) {
+			_wndMain.ShowWindow(SW_SHOW);
+			return;
+		}
 
-LYRIC_API void __stdcall LyricForm_Run()
-{
-	if (IsWindow(wndMain.Window())) {
-		wndMain.ShowWindow(SW_SHOW);
-		return;
+		HANDLE hThread;
+		DWORD dwThreadId;
+		hThread = CreateThread(
+			NULL,
+			0,
+			LyricFormThread,
+			(LPVOID)&_wndMain,
+			0,
+			&dwThreadId
+			);
+		CloseHandle(hThread);
 	}
-	HANDLE hThread;
-	DWORD dwThreadId;
-	hThread = CreateThread(
-		NULL,
-		0,
-		LyricFormThread,
-		0,
-		0,
-		&dwThreadId
-		);
-	CloseHandle(hThread);
-}
-LYRIC_API void __stdcall LyricForm_SetLyric(const wchar_t* lyric)
+
+	void __stdcall LyricForm_SetLyric(const wchar_t* lyric)
+	{
+		SendMessageW(_wndMain.m_hWnd, LyricFormCommand::CM_LYRIC, (WPARAM)lyric, NULL);
+	}
+
+	void __stdcall LyricForm_SendCommand(LyricFormCommand message, WPARAM wParam, LPARAM lParam)
+	{
+		PostMessage(_wndMain.m_hWnd, message, wParam, lParam);
+	}
+private:
+	static DWORD WINAPI LyricFormThread(LPVOID lpParam)
+	{
+		LyricForm* wndMain = (LyricForm*)lpParam;
+		MSG msg;
+		wndMain->Create(L"¸è´Ê", WS_OVERLAPPEDWINDOW);
+		wndMain->ShowWindow(SW_SHOW);
+		wndMain->UpdataWindow();
+
+		while (GetMessage(&msg, NULL, 0, 0))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		return 0;
+	}
+
+private:
+	LyricForm	_wndMain;
+};
+ILyricFormController* __stdcall CreateLyricFormController()
 {
-	LyricForm_SendCommand(LyricFormCommand::CM_LYRIC, (WPARAM)lyric, NULL);
-}
-LYRIC_API void __stdcall LyricForm_SendCommand(LyricFormCommand message, WPARAM wParam, LPARAM lParam)
-{
-	PostMessage(wndMain.m_hWnd, message, wParam, lParam);
+	LyricFormController* controller = new LyricFormController();
+	return (ILyricFormController*)controller;
 }

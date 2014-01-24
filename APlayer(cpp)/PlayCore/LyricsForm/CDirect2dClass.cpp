@@ -100,6 +100,7 @@ HRESULT CDirect2dClass::DrawRectangle(const RECT &rc, Color color)
 	}
 	return hr;
 }
+//IWriteText
 HRESULT CDirect2dClass::WriteText(const std::wstring& inText, const RECT &rc, float fontSize, Color fontcolor)
 {
 	HRESULT hr = S_OK;
@@ -155,4 +156,10 @@ HRESULT CDirect2dClass::WriteText(const std::wstring& inText, const RECT &rc, fl
 		DiscardD2DResource();
 	}
 	return hr;
+}
+
+HRESULT CDirect2dClass::OnFormChange()
+{
+	DiscardD2DResource();
+	return S_OK;
 }

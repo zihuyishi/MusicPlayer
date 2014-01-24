@@ -11,7 +11,7 @@
 
 
 class CDirect2dClass :
-public IWriteText
+	public IWriteText
 {
 public:
 	CDirect2dClass();
@@ -21,13 +21,17 @@ private:
 	HRESULT CreateFactory();
 	void DiscardD2DResource();
 public:
+	void SetTargetHwnd(HWND hWnd);
+public:
 	HRESULT DrawRectangle(const RECT &rc, 
 		Color color = { 0, 0, 0 , 1.0f});
 	HRESULT DrawEllipse();
+public:
+	//IWriteText
 	HRESULT WriteText(const std::wstring& inText,
 		const RECT &rc, float fontSize = 12.0f,
 		Color fontcolor = { 0, 0, 0, 1.0f });
-	void SetTargetHwnd(HWND hWnd);
+	HRESULT OnFormChange();
 	void Release() { delete this; }
 //uncopyable
 private:
@@ -51,6 +55,7 @@ private:
 	HWND					_hWnd				= NULL;
 	D2D1::ColorF			_backColor			= D2D1::ColorF::White;
 };
+
 IWriteText *CreateDirect2DDrawText(HWND hWnd)
 {
 	CDirect2dClass *pD2C = new CDirect2dClass();

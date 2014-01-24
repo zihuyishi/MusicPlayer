@@ -24,9 +24,12 @@ class LyricForm
 public:
 	HWND m_hWnd;
 	typedef LyricForm ThisType;
+	static const int DefaultWidth = 400;
+	static const int DefaultHeight = 400;
 public:
 	LyricForm()
 	{
+		fontcolor = { 0, 0, 0, 1.0f };
 	}
 	~LyricForm()
 	{}
@@ -37,119 +40,29 @@ public:
 		DWORD dwExStyle = 0,
 		int x = CW_USEDEFAULT,
 		int y = CW_USEDEFAULT,
-		int nWidth = CW_USEDEFAULT,
-		int nHeight = CW_USEDEFAULT,
+		int nWidth = DefaultWidth,
+		int nHeight = DefaultHeight,
 		HWND hWndParent = 0,
-		HMENU hMenu = 0)
-	{
-		HINSTANCE hInstance = GetModuleHandleW(NULL);
-		WNDCLASSEX wcex;
-		wcex.cbSize = sizeof(WNDCLASSEX);
+		HMENU hMenu = 0);
 
-		wcex.style	= CS_HREDRAW | CS_VREDRAW;
-		wcex.lpfnWndProc = wndProc;
-		wcex.cbClsExtra = 0;
-		wcex.cbWndExtra = 0;
-		wcex.hInstance = hInstance;
-		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
-		wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
-		wcex.lpszMenuName = NULL;
-		wcex.lpszClassName = ClassName();
-		wcex.hIconSm = NULL;
-		RegisterClassEx(&wcex);
+	HWND Window() const;
+	BOOL ShowWindow(int nCmdShow) const;
+	BOOL UpdataWindow() const;
 
-		m_hWnd = CreateWindowEx(
-			dwExStyle, ClassName(), lpWindowName, dwStyle, x,
-			y, nWidth, nHeight, hWndParent, hMenu, hInstance, this);
-		//DWORD ret = GetLastError();
-		return (m_hWnd ? TRUE : FALSE);
-	}
-	HWND Window() const { return m_hWnd; }
-	BOOL ShowWindow(int nCmdShow)
-	{
-		if (IsWindow(m_hWnd)) {
-			return ::ShowWindow(m_hWnd, nCmdShow);
-		}
-		return FALSE;
-	}
-	BOOL UpdataWindow()
-	{
-		return UpdateWindow(m_hWnd);
-	}
+
 public:
-	static LRESULT	CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-	{
-		ThisType *pThis = NULL;
-		if (message == WM_NCCREATE) {
-			CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
-			pThis = (ThisType*)pCreate->lpCreateParams;
-			SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pThis);
+	//Handle Message
+	static LRESULT	CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-			pThis->m_hWnd = hWnd;
-		}
-		else {
-			pThis = (ThisType*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-		}
-		if (pThis) {
-			return pThis->HandleMessage(message, wParam, lParam);
-		}
-		else {
-			return DefWindowProc(hWnd, message, wParam, lParam);
-		}
+	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	//Message method
+	void		PaintLyric();
+	inline void SetLyric(const std::wstring &lyric) { szLyric = lyric; }
+	inline void SetFontSize(float inSize) { fontsize = inSize; }
+	inline void SetFontColor(Color color) { fontcolor = color; }
+private:
 
-	}
-	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
-	{
-		switch (message)
-		{
-		case WM_CREATE:
-			_writeText = CreateDirect2DDrawText(m_hWnd);
-			break;
-		case WM_PAINT:
-			PaintLyric();
-			break;
-		case WM_DESTROY:
-			_writeText->Release();
-			PostQuitMessage(0);
-			break;
-		case CM_LYRIC:
-			SetLyric(std::wstring((wchar_t*)wParam));
-			PaintLyric();
-			break;
-		case CM_FONTCOLOR:
-			SetFontColor(MakeColor((DWORD)wParam, (DWORD)lParam));
-			break;
-		case CM_FONTSIZE:
-			SetFontSize((float)wParam);
-			break;
-		default:
-			return DefWindowProc(m_hWnd, message, wParam, lParam);
-		}
-		return 0;
-	}
-	void PaintLyric()
-	{
-		PAINTSTRUCT ps;
-		BeginPaint(m_hWnd, &ps);
-		RECT rc;
-		GetClientRect(m_hWnd, &rc);
-		_writeText->WriteText(szLyric, rc, fontsize, fontcolor);
-		EndPaint(m_hWnd, &ps);
-	}
-	void SetLyric(const std::wstring &lyric)
-	{
-		szLyric = lyric;
-	}
-	static void SetFontSize(float inSize)
-	{
-		fontsize = inSize;
-	}
-	static void SetFontColor(Color color)
-	{
-		fontcolor = color;
-	}
-	static Color MakeColor(DWORD dwColor, DWORD dwAplend = 255)
+	Color MakeColor(DWORD dwColor, DWORD dwAplend = 255)
 	{
 		Color retcolor;
 		DWORD red		= (dwColor & 0xFF0000) >> 16;
@@ -168,11 +81,8 @@ private:
 	IWriteText*		_writeText;
 
 	std::wstring szWindowClass;
-	static std::wstring szLyric;
-	static float fontsize;
-	static Color fontcolor;
+	std::wstring szLyric = L"";
+	float fontsize = 20.0f;
+	Color fontcolor;
 };
-Color		 LyricForm::fontcolor = { 0, 0, 0, 1.0 };
-float		 LyricForm::fontsize = 20.0f;
-std::wstring LyricForm::szLyric = L"";
 #endif

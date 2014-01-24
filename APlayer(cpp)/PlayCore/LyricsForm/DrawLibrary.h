@@ -10,6 +10,7 @@ typedef struct{
 }	Color;
 struct IWriteText {
 	virtual HRESULT WriteText(const std::wstring&, const RECT&, float, Color) = 0;
+	virtual HRESULT OnFormChange() = 0;
 	virtual void Release() = 0;
 };
 
