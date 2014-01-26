@@ -33,7 +33,7 @@ BOOL MusicPlayer::Play(const wstring filePath)
 	bret = _player->OpenFileW(filePath.c_str(), TStreamFormat::sfAutodetect);
 
 	if (!bret) return bret;
-	bret = _player->Play();
+	bret = this->Play();
 	return bret;
 }
 
@@ -41,7 +41,14 @@ BOOL MusicPlayer::Pause()
 {
 	return _player->Pause();
 }
-
+unsigned long MusicPlayer::GetPlayMilliseconds()
+{
+	TStreamTime pTime;
+	_player->GetPosition(&pTime);
+	unsigned long retMS = ((pTime.hms.hour * 60 + pTime.hms.minute) * 60 +
+		pTime.hms.second) * 1000 + pTime.hms.millisecond;
+	return retMS;
+}
 BOOL MusicPlayer::Stop()
 {
 	return _player->Stop();

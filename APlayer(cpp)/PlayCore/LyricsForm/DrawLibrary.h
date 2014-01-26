@@ -1,4 +1,9 @@
+/*****************************************
+Author	: Li Chong
+Main	: myyifan@gmail.com
 
+IWriteText的头文件
+******************************************/
 #include <windows.h>
 #include <iostream>
 #ifndef LLIB_DRAWLIBRARY_HEADER

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="TimerThread">
+      <UniqueIdentifier>{325d5ae0-b806-4695-afc3-9a62caf8f291}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -30,13 +33,16 @@
     <ClInclude Include="testPlayCore.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="PlayCore.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\PlayCore\LyricFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\LyricsForm\LyricsForm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PlayCore\TimerThread.h">
+      <Filter>TimerThread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PlayCore\PlayCore.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -49,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="..\PlayCore\LyricFile.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PlayCore\TimerThread.cpp">
+      <Filter>TimerThread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +74,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="PlayCore.lib" />
     <Library Include="..\Debug\LyricsForm.lib" />
   </ItemGroup>
 </Project>

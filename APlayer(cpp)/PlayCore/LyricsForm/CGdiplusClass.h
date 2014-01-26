@@ -1,4 +1,7 @@
+/*****************************************
+IWriteText接口的GDIPlus版实现
 
+******************************************/
 #include <Windows.h>
 #include <objidl.h>
 #include <gdiplus.h>

@@ -14,13 +14,14 @@ public:
 	PlayController();
 	~PlayController();
 public:
-	int		__stdcall AddMusic(const wchar_t* musicPath);
-	int		__stdcall Play();
-	int		__stdcall Pause();
-	int		__stdcall Stop();
-	int		__stdcall PlayNext();
-	void	__stdcall SetLoopMode(LoopMode mode) { _loopmode = mode; }
-	void	__stdcall Release();
+	int				__stdcall AddMusic(const wchar_t* musicPath);
+	int				__stdcall Play();
+	int				__stdcall Pause();
+	int				__stdcall Stop();
+	int				__stdcall PlayNext();
+	unsigned long	__stdcall GetPlayMilliseconds();
+	void			__stdcall SetLoopMode(LoopMode mode) { _loopmode = mode; }
+	void			__stdcall Release();
 private:
 	MusicPlayer		_player;
 	MusicList		_list;

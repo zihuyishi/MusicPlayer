@@ -1,3 +1,8 @@
+/*************************************
+播放器窗体实现类
+
+**************************************/
+
 #include "GacUI.h"
 #include "..\PlayCore\PlayCore.h"
 #include "..\Common\ScopeGuard.h"

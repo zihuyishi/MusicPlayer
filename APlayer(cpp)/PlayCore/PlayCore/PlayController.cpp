@@ -43,6 +43,10 @@ int PlayController::PlayNext()
 	_player.Play(_list[index]);
 	return TRUE;
 }
+unsigned long PlayController::GetPlayMilliseconds()
+{
+	return _player.GetPlayMilliseconds();
+}
 void PlayController::Release()
 {
 	delete this;

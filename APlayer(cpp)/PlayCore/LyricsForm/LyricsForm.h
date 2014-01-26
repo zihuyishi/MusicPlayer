@@ -1,3 +1,10 @@
+/*****************************************
+Author	: Li Chong
+Mail	: myyifan@gmail.com
+
+歌词窗体控制类，用来控制歌词窗体的显示，颜色
+等信息。
+******************************************/
 #ifndef APLAYER_LYRICSFORM_HEADER
 #define APLAYER_LYRICSFORM_HEADER
 

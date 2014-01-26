@@ -1,3 +1,8 @@
+/*****************************************
+歌词窗口的实现类
+
+******************************************/
+
 #include "..\Common\ScopeGuard.h"
 #include "DrawLibrary.h"
 
@@ -13,9 +18,6 @@
 #define MyDllName L"LyricForm.dll"
 
 #include <iostream>
-
- 
-
 
 
 class LyricForm 

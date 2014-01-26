@@ -1,3 +1,8 @@
+/*****************************************
+IWriteText接口的DirectWrite版实现
+
+******************************************/
+
 #include <d2d1.h>
 #pragma comment(lib, "d2d1.lib")
 #include <dwrite.h>
