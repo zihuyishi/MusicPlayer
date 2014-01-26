@@ -31,7 +31,8 @@ public:
 		fontcolor = { 0, 0, 0, 1.0f };
 	}
 	~LyricForm()
-	{}
+	{
+	}
 public:
 	BOOL Create(
 		PCWSTR lpWindowName,

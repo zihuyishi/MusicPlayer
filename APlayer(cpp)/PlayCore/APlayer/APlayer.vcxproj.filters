@@ -13,43 +13,37 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="GacUI">
+      <UniqueIdentifier>{3ab5e5c8-024a-42f7-9e26-fb9656dfa179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="APlayerWindow">
+      <UniqueIdentifier>{4e2de100-f971-4f8b-9282-97c41fde4661}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GacUI.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GacUIReflection.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GacUIWindows.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Vlpp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="MainWindow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ViewSwitchingWindow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GacUI.cpp">
+      <Filter>GacUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GacUIReflection.cpp">
+      <Filter>GacUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GacUIWindows.cpp">
+      <Filter>GacUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Vlpp.cpp">
+      <Filter>GacUI</Filter>
+    </ClCompile>
+    <ClCompile Include="APlayerWindow.cpp">
+      <Filter>APlayerWindow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GacUI.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GacUIReflection.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GacUIWindows.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Vlpp.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="APlayerWindow.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LFileDialog.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -60,6 +54,24 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\ScopeGuard.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GacUI.h">
+      <Filter>GacUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GacUIReflection.h">
+      <Filter>GacUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GacUIWindows.h">
+      <Filter>GacUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Vlpp.h">
+      <Filter>GacUI</Filter>
+    </ClInclude>
+    <ClInclude Include="APlayerWindow.h">
+      <Filter>APlayerWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LyricsForm\LyricsForm.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

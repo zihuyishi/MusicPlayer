@@ -123,7 +123,7 @@ HRESULT CDirect2dClass::WriteText(const std::wstring& inText, const RECT &rc, fl
 		DWRITE_FONT_STYLE_NORMAL,
 		DWRITE_FONT_STRETCH_NORMAL,
 		fontSize,
-		L"en-us",
+		L"zh-cn",
 		&pTextFormat
 		);
 	hr = pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);

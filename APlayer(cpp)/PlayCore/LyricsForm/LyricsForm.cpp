@@ -23,17 +23,25 @@ public:
 			return;
 		}
 
+		_hCreateEvent = CreateEvent(
+			NULL,
+			TRUE,
+			FALSE,
+			L"Create Event"
+			);
+		ON_SCOPE_EXIT([&] { CloseHandle(_hCreateEvent); });
 		HANDLE hThread;
 		DWORD dwThreadId;
 		hThread = CreateThread(
 			NULL,
 			0,
 			LyricFormThread,
-			(LPVOID)&_wndMain,
+			(LPVOID)this,
 			0,
 			&dwThreadId
 			);
-		CloseHandle(hThread);
+		ON_SCOPE_EXIT([&] { CloseHandle(hThread); });
+		WaitForSingleObject(_hCreateEvent, 5000);
 	}
 
 	void __stdcall LyricForm_SetLyric(const wchar_t* lyric)
@@ -48,12 +56,15 @@ public:
 private:
 	static DWORD WINAPI LyricFormThread(LPVOID lpParam)
 	{
-		LyricForm* wndMain = (LyricForm*)lpParam;
+		MyType*		pThis = (MyType*)lpParam;
+		LyricForm*	wndMain;
+		wndMain = &(pThis->_wndMain);
 		MSG msg;
 		wndMain->Create(L"¸è´Ê", WS_OVERLAPPEDWINDOW);
 		wndMain->ShowWindow(SW_SHOW);
 		wndMain->UpdataWindow();
 
+		SetEvent(pThis->_hCreateEvent);
 		while (GetMessage(&msg, NULL, 0, 0))
 		{
 			TranslateMessage(&msg);
@@ -64,6 +75,7 @@ private:
 
 private:
 	LyricForm	_wndMain;
+	HANDLE		_hCreateEvent;
 };
 
 ILyricFormController* __stdcall CreateLyricFormController()

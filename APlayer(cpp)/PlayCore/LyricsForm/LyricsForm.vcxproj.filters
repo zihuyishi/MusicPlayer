@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="DrawLib">
+      <UniqueIdentifier>{d0d4ba28-c878-4cf6-9aae-264bb34cae37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LyricFormClass">
+      <UniqueIdentifier>{5fa9fdfb-ce0f-4095-8ac3-0425f700bb80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -27,23 +33,23 @@
     <ClInclude Include="LyricsForm.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LyricFormClass.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\ScopeGuard.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DrawLibrary.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CDirect2dClass.h">
-      <Filter>头文件</Filter>
+      <Filter>DrawLib</Filter>
     </ClInclude>
     <ClInclude Include="CGdiplusClass.h">
-      <Filter>头文件</Filter>
+      <Filter>DrawLib</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawLibrary.h">
+      <Filter>DrawLib</Filter>
+    </ClInclude>
+    <ClInclude Include="LyricFormClass.h">
+      <Filter>LyricFormClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,14 +62,14 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CGdiplusClass.cpp">
+      <Filter>DrawLib</Filter>
+    </ClCompile>
     <ClCompile Include="CDirect2dClass.cpp">
-      <Filter>源文件</Filter>
+      <Filter>DrawLib</Filter>
     </ClCompile>
     <ClCompile Include="LyricFormClass.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CGdiplusClass.cpp">
-      <Filter>源文件</Filter>
+      <Filter>LyricFormClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
