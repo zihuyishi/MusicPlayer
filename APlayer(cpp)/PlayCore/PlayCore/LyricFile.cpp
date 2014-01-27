@@ -8,6 +8,9 @@
 using std::ifstream;
 using std::wstring;
 PLAYCORE_BEGIN
+
+const wchar_t LyricFile::LyricFormat[] = L"lrc";
+
 bool IsLyric(const wstring &src)
 {
 	size_t lpos = src.find(L'[');
@@ -41,7 +44,7 @@ wstring lyricString(const wstring &src)
 	wstring retstring = src.substr(rpos + 1, src.length());
 	return retstring;
 }
-void LyricFile::GetLyric(std::wstring filePath)
+void LyricFile::SetLyric(const std::wstring& filePath)
 {
 	const int linelength = 256;
 	char line[linelength];
@@ -63,14 +66,13 @@ void LyricFile::GetLyric(std::wstring filePath)
 	}
 
 }
-std::wstring LyricFile::NowLyric(size_t millisecond)
+std::wstring LyricFile::NowLyric(size_t millisecond) const
 {
 	wstring ret(L"");
 	size_t index;
 	for (index = 0; index < _lyrics.size(); ++index) {
 		if (_lyrics[index].time.ToMillisecond() > millisecond)
 		{
-			index--;
 			if (index > 0){
 				ret = _lyrics[index].lyric;
 			}

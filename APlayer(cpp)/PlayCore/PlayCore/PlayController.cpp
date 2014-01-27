@@ -28,6 +28,10 @@ int PlayController::Play()
 {
 	return _player.Play();
 }
+int PlayController::Continue()
+{
+	return _player.Play();
+}
 int PlayController::Pause()
 {
 	return _player.Pause();
@@ -46,6 +50,12 @@ int PlayController::PlayNext()
 unsigned long PlayController::GetPlayMilliseconds()
 {
 	return _player.GetPlayMilliseconds();
+}
+std::wstring PlayController::GetLyric()
+{
+	return _list[_currentindex].GetLyric(
+			_player.GetPlayMilliseconds()
+			);
 }
 void PlayController::Release()
 {

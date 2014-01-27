@@ -7,7 +7,7 @@ Main	: myyifan@gmail.com
 #ifndef APLAYER_PLAYCORE
 #define APLAYER_PLAYCORE
 
-#include "stdafx.h"
+#include <iostream>
 
 #ifdef APLAY_API
 //µ¼³öº¯Êý
@@ -28,11 +28,13 @@ class IPlayController
 public:
 	virtual int				__stdcall	AddMusic(const wchar_t* musicPath) = 0;
 	virtual int				__stdcall	Play() = 0;
+	virtual int				__stdcall	Continue() = 0;
 	virtual int				__stdcall	Pause() = 0;
 	virtual int				__stdcall	Stop() = 0;
 	virtual int				__stdcall	PlayNext() = 0;
 	virtual void			__stdcall	SetLoopMode(LoopMode mode) = 0;
 	virtual unsigned long	__stdcall	GetPlayMilliseconds() = 0;
+	virtual std::wstring	__stdcall	GetLyric() = 0;
 	virtual void			__stdcall	Release() = 0;
 };
 

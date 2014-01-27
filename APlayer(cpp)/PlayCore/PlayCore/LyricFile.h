@@ -10,11 +10,11 @@ typedef struct {
 	int minute;
 	int second;
 	int millisecond;
-	inline int operator()()
+	inline int operator()() const
 	{
 		return ToMillisecond();
 	}
-	inline size_t ToMillisecond()
+	inline size_t ToMillisecond() const
 	{
 		return (minute * 60 + second) * 1000 + millisecond;
 	}
@@ -31,8 +31,14 @@ public:
 	{}
 	~LyricFile()
 	{}
-	void GetLyric(std::wstring filePath);
-	std::wstring NowLyric(size_t millisecond);
+public:
+	//歌词文件类型
+	static const wchar_t LyricFormat[];
+
+	void				SetLyric(const std::wstring& filePath);
+	std::wstring		NowLyric(size_t millisecond) const;
+	inline std::wstring	GetLyricPath() const { return _filePath; }
+	inline int			IsEmpty() const { return _lyrics.size(); }
 	void Release() { 
 		_filePath.clear();
 		_lyrics.clear();
@@ -45,6 +51,5 @@ private:
 	std::vector<std::wstring> _extrainfo;
 	std::vector<int>	_lyricindex;
 };
-
 PLAYCORE_END
 #endif

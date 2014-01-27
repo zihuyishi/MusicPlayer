@@ -8,6 +8,7 @@ Mail	: myyifan@gmail.com
 #ifndef APLAYER_LYRICSFORM_HEADER
 #define APLAYER_LYRICSFORM_HEADER
 
+#include <Windows.h>
 #ifdef LYRIC_API
 //µ¼³öº¯Êý
 #else
