@@ -35,6 +35,8 @@ private:
 	GuiButton*				buttonLyric;
 	IPlayController*		player;
 	ILyricFormController*	lyricform;
+
+
 private:
 	//打开文件窗口
 	std::vector<std::wstring> showOpenFile();
@@ -62,6 +64,7 @@ private:
 	{
 		lyricform->LyricForm_Run();
 		lyricform->LyricForm_SetLyric(L"APlayer v1.0");
+		
 	}
 private:
 	//初始化

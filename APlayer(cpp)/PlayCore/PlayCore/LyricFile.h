@@ -46,10 +46,10 @@ public:
 		_lyricindex.clear();
 	}
 private:
-	std::wstring _filePath;
-	std::vector<LyricLine> _lyrics;
-	std::vector<std::wstring> _extrainfo;
-	std::vector<int>	_lyricindex;
+	std::wstring					_filePath;
+	std::vector<LyricLine>			_lyrics;
+	std::vector<std::wstring>		_extrainfo;
+	std::vector<int>				_lyricindex;
 };
 PLAYCORE_END
 #endif
