@@ -60,7 +60,7 @@
     <ClInclude Include="..\LyricsForm\LyricsForm.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="TimerThread.h">
+    <ClInclude Include="..\Common\TimerThread.h">
       <Filter>TimerThread</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,7 +89,7 @@
     <ClCompile Include="LyricFile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="TimerThread.cpp">
+    <ClCompile Include="..\Common\TimerThread.cpp">
       <Filter>TimerThread</Filter>
     </ClCompile>
   </ItemGroup>

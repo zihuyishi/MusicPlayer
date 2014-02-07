@@ -59,6 +59,8 @@ unsigned long PlayController::GetPlayMilliseconds()
 }
 std::wstring PlayController::GetLyric()
 {
+	if (_currentindex < 0) return wstring(L"");
+	if (_list.ListLength() == 0) return wstring(L"");
 	return _list[_currentindex].GetLyric(
 			_player.GetPlayMilliseconds()
 			);

@@ -86,6 +86,7 @@
     <ClCompile Include="GacUIReflection.cpp" />
     <ClCompile Include="GacUIWindows.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="TimerThread.cpp" />
     <ClCompile Include="ViewSwitchingWindow.cpp" />
     <ClCompile Include="Vlpp.cpp" />
   </ItemGroup>
@@ -98,6 +99,7 @@
     <ClInclude Include="GacUIWindows.h" />
     <ClInclude Include="LFileDialog.h" />
     <ClInclude Include="LStdDef.h" />
+    <ClInclude Include="TimerThread.h" />
     <ClInclude Include="ViewSwitchingWindow.h" />
     <ClInclude Include="Vlpp.h" />
   </ItemGroup>

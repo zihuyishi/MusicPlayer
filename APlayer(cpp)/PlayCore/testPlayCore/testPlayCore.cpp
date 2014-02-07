@@ -11,7 +11,7 @@
 #pragma comment( lib, "PlayCore.lib")
 #include "..\LyricsForm\LyricsForm.h"
 #pragma comment(lib, "LyricsForm.lib")
-#include "..\PlayCore\TimerThread.h"
+#include "..\Common\TimerThread.h"
 
 #define MAX_LOADSTRING 100
 
@@ -143,7 +143,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    PlayMusic();
    lyricController->LyricForm_Run();
    lyricController->LyricForm_SetLyric(L"¸èÇú£ºÍâÆÅÇÅ\t¸è´Ê£ºÂåÌìÒÀ");
-   g_timeThread.StartTimer();
    int timeid = SetTimer(hWnd, 1, 2000, NULL);
    return TRUE;
 }

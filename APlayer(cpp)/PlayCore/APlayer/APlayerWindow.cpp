@@ -187,3 +187,11 @@ void APlayerWindow::initWindows()
 	this->ForceCalculateSizeImmediately();
 	this->MoveToScreenCenter();
 }
+
+void APlayerWindow::setLyricNow(void *lpParam, DWORD, DWORD)
+{
+	APlayerWindow* pThis = (APlayerWindow*)lpParam;
+	
+	std::wstring lyric = pThis->player->GetLyric();
+	pThis->lyricform->LyricForm_SetLyric(lyric.c_str());
+}

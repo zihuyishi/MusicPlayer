@@ -19,6 +19,10 @@
 
 #include <iostream>
 
+typedef struct{
+	unsigned int interval;
+	void* lpParam;
+} CREATETIMER_PARAM;
 
 class LyricForm 
 {
@@ -79,7 +83,7 @@ private:
 	}
 private:
 	LPCWSTR ClassName() const { return L"Lyric Window Class"; }
-	void	OnTimer(UINT timerID, LYRICFORM_CALLBACK func);
+	void	OnTimer(UINT timerID);
 private:
 	LDrawLib::IWriteText*		_writeText;
 
@@ -87,6 +91,8 @@ private:
 	std::wstring			szLyric = L"";
 	float					fontsize = 20.0f;
 	LDrawLib::Color			fontcolor;
-	TIMERPROC				_createtimerCallback;
+	LYRICFORM_CALLBACK		createtimeFunc;
+	void*					createtimeParam;
+
 };
 #endif

@@ -42,6 +42,9 @@
     <ClCompile Include="APlayerWindow.cpp">
       <Filter>APlayerWindow</Filter>
     </ClCompile>
+    <ClCompile Include="TimerThread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LFileDialog.h">
@@ -72,6 +75,9 @@
       <Filter>APlayerWindow</Filter>
     </ClInclude>
     <ClInclude Include="..\LyricsForm\LyricsForm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerThread.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

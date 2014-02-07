@@ -30,7 +30,7 @@ public:
 	virtual	void __stdcall LyricForm_Run() = 0;
 	virtual void __stdcall LyricForm_SetLyric(const wchar_t*) = 0;
 	virtual void __stdcall LyricForm_SendCommand(LyricFormCommand, WPARAM, LPARAM) = 0;
-	virtual void __stdcall LyricForm_CreateTimer(unsigned int, LYRICFORM_CALLBACK) = 0;
+	virtual void __stdcall LyricForm_CreateTimer(unsigned int, LYRICFORM_CALLBACK, void*) = 0;
 };
 
 LYRIC_API ILyricFormController* __stdcall CreateLyricFormController();

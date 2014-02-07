@@ -8,6 +8,7 @@
 #include "..\Common\ScopeGuard.h"
 #include "..\LyricsForm\LyricsForm.h"
 #pragma comment(lib, "LyricsForm.lib")
+#include "..\Common\TimerThread.h"
 
 #include <Shlobj.h>
 #include <Shobjidl.h>
@@ -24,7 +25,7 @@ public:
 	{
 		initWindows();
 		player = CreateController();
-		player->SetVolume(30);
+		player->SetVolume(100);
 	}
 	~APlayerWindow()
 	{}
@@ -36,7 +37,7 @@ private:
 	GuiButton*				buttonLyric;
 	IPlayController*		player;
 	ILyricFormController*	lyricform;
-
+	CTimerThread			_timer;
 
 private:
 	//打开文件窗口
@@ -65,10 +66,14 @@ private:
 	{
 		lyricform->LyricForm_Run();
 		lyricform->LyricForm_SetLyric(L"APlayer v1.0");
+		
+		//lyricform->LyricForm_CreateTimer(50, setLyricNow, this);
+		_timer.CreateTimer(50, setLyricNow, this);
 	}
 private:
 	//初始化
 	void initWindows();
+	static void __stdcall setLyricNow(void *lpParam, DWORD, DWORD);
 };
 
 #endif

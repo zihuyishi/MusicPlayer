@@ -53,9 +53,12 @@ public:
 		PostMessage(_wndMain.m_hWnd, message, wParam, lParam);
 	}
 
-	void __stdcall LyricForm_CreateTimer(unsigned int interval, LYRICFORM_CALLBACK func)
+	void __stdcall LyricForm_CreateTimer(unsigned int interval, LYRICFORM_CALLBACK func, void* lpParam)
 	{
-		SendMessageW(_wndMain.m_hWnd, LyricFormCommand::CM_CREATETIMER, (WPARAM)interval, (LPARAM)func);
+		CREATETIMER_PARAM wParam;
+		wParam.interval = interval;
+		wParam.lpParam = lpParam;
+		SendMessageW(_wndMain.m_hWnd, LyricFormCommand::CM_CREATETIMER, (WPARAM)&wParam, (LPARAM)func);
 	}
 
 private:
