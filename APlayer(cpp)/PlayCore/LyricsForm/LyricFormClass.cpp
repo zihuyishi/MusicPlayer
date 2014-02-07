@@ -89,6 +89,9 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_SIZE:
 		_writeText->OnFormChange();
 		break;
+	case WM_TIMER:
+		OnTimer((UINT)wParam, (LYRICFORM_CALLBACK)lParam);
+		break;
 	case CM_LYRIC:
 		SetLyric(std::wstring((wchar_t*)wParam));
 		PaintLyric();
@@ -98,6 +101,9 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_FONTSIZE:
 		SetFontSize((float)wParam);
+		break;
+	case CM_CREATETIMER:
+		SetTimer(m_hWnd, 1, (UINT)wParam, (TIMERPROC)lParam);
 		break;
 	default:
 		return DefWindowProc(m_hWnd, message, wParam, lParam);
@@ -114,4 +120,11 @@ void LyricForm::PaintLyric()
 	GetClientRect(m_hWnd, &rc);
 	_writeText->WriteText(szLyric, rc, fontsize, fontcolor);
 	EndPaint(m_hWnd, &ps);
+}
+
+void LyricForm::OnTimer(UINT timerID, LYRICFORM_CALLBACK func)
+{
+	if (func != NULL) {
+		func(m_hWnd, func);
+	}
 }

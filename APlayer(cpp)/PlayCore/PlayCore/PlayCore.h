@@ -32,6 +32,7 @@ public:
 	virtual int				__stdcall	Pause() = 0;
 	virtual int				__stdcall	Stop() = 0;
 	virtual int				__stdcall	PlayNext() = 0;
+	virtual int				__stdcall	SetVolume(int) = 0;
 	virtual void			__stdcall	SetLoopMode(LoopMode mode) = 0;
 	virtual unsigned long	__stdcall	GetPlayMilliseconds() = 0;
 	virtual std::wstring	__stdcall	GetLyric() = 0;

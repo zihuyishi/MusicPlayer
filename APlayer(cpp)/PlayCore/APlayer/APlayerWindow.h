@@ -24,6 +24,7 @@ public:
 	{
 		initWindows();
 		player = CreateController();
+		player->SetVolume(30);
 	}
 	~APlayerWindow()
 	{}
@@ -64,7 +65,6 @@ private:
 	{
 		lyricform->LyricForm_Run();
 		lyricform->LyricForm_SetLyric(L"APlayer v1.0");
-		
 	}
 private:
 	//≥ı ºªØ

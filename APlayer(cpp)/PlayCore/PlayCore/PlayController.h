@@ -21,6 +21,7 @@ public:
 	int				__stdcall Pause();
 	int				__stdcall Stop();
 	int				__stdcall PlayNext();
+	int				__stdcall SetVolume(int value);
 	unsigned long	__stdcall GetPlayMilliseconds();
 	void			__stdcall SetLoopMode(LoopMode mode) { _loopmode = mode; }
 	std::wstring	__stdcall GetLyric();
@@ -33,8 +34,17 @@ private:
 	int				_currentindex;
 
 private:
-	int				getNextIndex();
-
-
+	/**
+	*自动播放下一首
+	*/
+	int				autoPlayNext();
+	/**
+	*@bAuto	是否为自动播放下一首。用来区分用户手动
+	*选择播放下一首歌或者上一首播放完自动播放下一首。
+	*/
+	int				getNextIndex(bool bAuto = false);
+private:
+	static DWORD WINAPI		playNextThread(LPVOID lpParam);
+	static int __stdcall	onPlayEnd(void* instance, void* lpParam);
 };
 

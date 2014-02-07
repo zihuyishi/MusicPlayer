@@ -79,12 +79,14 @@ private:
 	}
 private:
 	LPCWSTR ClassName() const { return L"Lyric Window Class"; }
+	void	OnTimer(UINT timerID, LYRICFORM_CALLBACK func);
 private:
 	LDrawLib::IWriteText*		_writeText;
 
-	std::wstring szWindowClass;
-	std::wstring szLyric = L"";
-	float fontsize = 20.0f;
-	LDrawLib::Color fontcolor;
+	std::wstring			szWindowClass;
+	std::wstring			szLyric = L"";
+	float					fontsize = 20.0f;
+	LDrawLib::Color			fontcolor;
+	TIMERPROC				_createtimerCallback;
 };
 #endif

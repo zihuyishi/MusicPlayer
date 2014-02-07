@@ -8,7 +8,7 @@
 
 
 PlayController::PlayController():
-_currentindex(0), _loopmode(LoopAll)
+_currentindex(-1), _loopmode(LoopAll)
 {
 }
 
@@ -40,11 +40,17 @@ int PlayController::Stop()
 {
 	return _player.Stop();
 }
+int	PlayController::SetVolume(int value)
+{
+	return _player.SetVolume(value);
+}
 int PlayController::PlayNext()
 {
+	_player.SetPlayEndCallback(NULL);
 	int index = this->getNextIndex();
 	if (index == -1) return 0;
 	_player.Play(_list[index]);
+	_player.SetPlayEndCallback(onPlayEnd, this);
 	return TRUE;
 }
 unsigned long PlayController::GetPlayMilliseconds()
@@ -65,19 +71,34 @@ void PlayController::Release()
 
 
 //private method
-int PlayController::getNextIndex()
+int PlayController::autoPlayNext()
+{
+	int index = getNextIndex(true);
+	if (index == -1) return FALSE;
+	_player.Play(_list[index]);
+	return TRUE;
+}
+DWORD PlayController::playNextThread(void *lpParam)
+{
+	PlayController* playCtrl = (PlayController*)lpParam;
+	playCtrl->autoPlayNext();
+	return 0;
+}
+int PlayController::getNextIndex(bool bAuto)
 {
 	int listLen = _list.ListLength();
 	if (listLen == 0) return -1;
 	switch (_loopmode) {
 	case LoopNo:
 		++_currentindex;
+		if (!bAuto) break;
 		if (_currentindex == listLen) return -1;
 		break;
 	case LoopAll:
 		++_currentindex;
 		break;
 	case LoopOnce:
+		if (!bAuto) ++_currentindex;
 		break;
 	case LoopRandom:
 		srand(static_cast<unsigned int>(time(NULL)));
@@ -91,6 +112,21 @@ int PlayController::getNextIndex()
 	return _currentindex;
 }
 
-
+int PlayController::onPlayEnd(void *instance, void *lpParam)
+{
+	PlayController* playctl = (PlayController*)lpParam;
+	HANDLE	hThread;
+	DWORD	dwThread;
+	hThread = CreateThread(
+		NULL,
+		0,
+		playNextThread,
+		playctl,
+		0,
+		&dwThread
+		);
+	CloseHandle(hThread);
+	return 0;
+}
 
 

@@ -22,7 +22,6 @@ public:
 			_wndMain.ShowWindow(SW_SHOW);
 			return;
 		}
-
 		_hCreateEvent = CreateEvent(
 			NULL,
 			TRUE,
@@ -43,7 +42,7 @@ public:
 		ON_SCOPE_EXIT([&] { CloseHandle(hThread); });
 		WaitForSingleObject(_hCreateEvent, 5000);
 	}
-
+	//ILyricFormController methods
 	void __stdcall LyricForm_SetLyric(const wchar_t* lyric)
 	{
 		SendMessageW(_wndMain.m_hWnd, LyricFormCommand::CM_LYRIC, (WPARAM)lyric, NULL);
@@ -53,6 +52,12 @@ public:
 	{
 		PostMessage(_wndMain.m_hWnd, message, wParam, lParam);
 	}
+
+	void __stdcall LyricForm_CreateTimer(unsigned int interval, LYRICFORM_CALLBACK func)
+	{
+		SendMessageW(_wndMain.m_hWnd, LyricFormCommand::CM_CREATETIMER, (WPARAM)interval, (LPARAM)func);
+	}
+
 private:
 	static DWORD WINAPI LyricFormThread(LPVOID lpParam)
 	{
@@ -76,6 +81,7 @@ private:
 private:
 	LyricForm	_wndMain;
 	HANDLE		_hCreateEvent;
+
 };
 
 ILyricFormController* __stdcall CreateLyricFormController()
