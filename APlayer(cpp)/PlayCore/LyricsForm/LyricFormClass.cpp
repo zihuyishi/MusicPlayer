@@ -10,7 +10,7 @@ BOOL LyricForm::Create(
 	int y,
 	int nWidth ,
 	int nHeight,
-	HWND hWndParent ,
+	HWND hWndParent,
 	HMENU hMenu)
 {
 	HINSTANCE hInstance = GetModuleHandleW(NULL);
@@ -73,7 +73,6 @@ LRESULT	CALLBACK LyricForm::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 }
 LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	CREATETIMER_PARAM *ctParam;
 	switch (message)
 	{
 	case WM_CREATE:
@@ -91,7 +90,6 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		_writeText->OnFormChange();
 		break;
 	case WM_TIMER:
-		OnTimer((UINT)wParam);
 		break;
 	case CM_LYRIC:
 		SetLyric(std::wstring((wchar_t*)wParam));
@@ -102,12 +100,6 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_FONTSIZE:
 		SetFontSize((float)wParam);
-		break;
-	case CM_CREATETIMER:
-		ctParam = (CREATETIMER_PARAM*)wParam;
-		createtimeParam = ctParam->lpParam;
-		createtimeFunc = (LYRICFORM_CALLBACK)lParam;
-		SetTimer(m_hWnd, 1, (UINT)ctParam->interval, NULL);
 		break;
 	default:
 		return DefWindowProc(m_hWnd, message, wParam, lParam);
@@ -124,11 +116,4 @@ void LyricForm::PaintLyric()
 	GetClientRect(m_hWnd, &rc);
 	_writeText->WriteText(szLyric, rc, fontsize, fontcolor);
 	EndPaint(m_hWnd, &ps);
-}
-
-void LyricForm::OnTimer(UINT timerID)
-{
-	if (createtimeFunc != NULL) {
-		createtimeFunc(m_hWnd, createtimeParam);
-	}
 }

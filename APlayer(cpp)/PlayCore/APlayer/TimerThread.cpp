@@ -5,6 +5,7 @@ void CTimerThread::KillTimer()
 {
 	if (_hTimer != NULL) {
 		CancelWaitableTimer(_hTimer);
+		CloseHandle(_hTimer);
 		_hTimer = NULL;
 	}
 	_bRunning = false;
@@ -28,6 +29,7 @@ int CTimerThread::CreateTimer(unsigned int interval, PTIMERAPCROUTINE func, void
 		_bRunning = false;
 		return FALSE;
 	}
+	CloseHandle(_hThread);
 	return TRUE;
 }
 

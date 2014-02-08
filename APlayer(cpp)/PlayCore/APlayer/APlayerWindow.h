@@ -67,7 +67,6 @@ private:
 		lyricform->LyricForm_Run();
 		lyricform->LyricForm_SetLyric(L"APlayer v1.0");
 		
-		//lyricform->LyricForm_CreateTimer(50, setLyricNow, this);
 		_timer.CreateTimer(50, setLyricNow, this);
 	}
 private:

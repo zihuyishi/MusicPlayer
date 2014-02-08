@@ -1,11 +1,8 @@
 #ifndef APLAYER_TIMERTHREAD_H
 #define APLAYER_TIMERTHREAD_H
 #include <Windows.h>
-#include <stddef.h>
 class CTimerThread
 {
-public:
-	typedef void(__stdcall *TTCallBackFunc)(void* lpParam);
 public:
 	CTimerThread() :
 		_hThread(NULL), _hEvent(NULL),
