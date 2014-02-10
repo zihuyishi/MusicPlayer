@@ -8,7 +8,7 @@
 #include "..\Common\ScopeGuard.h"
 #include "..\LyricsForm\LyricsForm.h"
 #pragma comment(lib, "LyricsForm.lib")
-#include "..\Common\TimerThread.h"
+#include "TimerThread.h"
 
 #include <Shlobj.h>
 #include <Shobjidl.h>

@@ -1,4 +1,3 @@
-
 #include "TimerThread.h"
 
 void CTimerThread::KillTimer()

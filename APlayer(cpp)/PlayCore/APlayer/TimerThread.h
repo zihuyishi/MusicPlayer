@@ -1,3 +1,11 @@
+/********************************
+author:
+	zihuyishi 516378258@qq.com
+
+version 1.0
+一个定时器线程，每隔相应时间调用函数。
+*********************************/
+
 #ifndef APLAYER_TIMERTHREAD_H
 #define APLAYER_TIMERTHREAD_H
 #include <Windows.h>
