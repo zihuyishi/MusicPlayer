@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LyricsForm", "LyricsForm\Ly
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testLyricFile", "testLyricFile\testLyricFile.vcxproj", "{5EC86F14-176E-4944-B0AF-16F8C23EF95B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "duiAPlayer", "duiAPlayer\duiAPlayer\duiAPlayer.vcxproj", "{5CAB5701-4482-4629-8B12-4A38888C4CDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -50,6 +52,12 @@ Global
 		{5EC86F14-176E-4944-B0AF-16F8C23EF95B}.Lib|Win32.Build.0 = Release|Win32
 		{5EC86F14-176E-4944-B0AF-16F8C23EF95B}.Release|Win32.ActiveCfg = Release|Win32
 		{5EC86F14-176E-4944-B0AF-16F8C23EF95B}.Release|Win32.Build.0 = Release|Win32
+		{5CAB5701-4482-4629-8B12-4A38888C4CDA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5CAB5701-4482-4629-8B12-4A38888C4CDA}.Debug|Win32.Build.0 = Debug|Win32
+		{5CAB5701-4482-4629-8B12-4A38888C4CDA}.Lib|Win32.ActiveCfg = Release|Win32
+		{5CAB5701-4482-4629-8B12-4A38888C4CDA}.Lib|Win32.Build.0 = Release|Win32
+		{5CAB5701-4482-4629-8B12-4A38888C4CDA}.Release|Win32.ActiveCfg = Release|Win32
+		{5CAB5701-4482-4629-8B12-4A38888C4CDA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

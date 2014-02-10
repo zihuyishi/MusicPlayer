@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Window mininfo="380,220" size="480,320" sizebox="4,4,6,6" caption="0,0,0,90">
+	<Font name="幼圆" size="16" default="true" />
+  <Default name="Button" 
+           value="normalimage=&quot;file='src\button_normal.png' corner='4,2,4,2' fade='200' hsl='true'&quot; pushedimage=&quot;
+           file='src\button_pushed.png' corner='4,2,4,2' fade='200' hsl='true'&quot; hotimage=&quot;
+           file='src\button_hover.png' corner='4,2,4,2' fade='200' hsl='true'&quot; " />
+  <VerticalLayout bkcolor="#FF66CCFF">
+    <Button name="playButton" text="Play" height="20" maxwidth="120"/>
+    <Button name="stopButton" text="Stop" height="20" maxwidth="120"/>
+    <Button name="addButton" text="Add" height="20" maxwidth="120"/>
+    <Button name="lyricButton" text="ShowLyric" height="20" maxwidth="120"/>
+  </VerticalLayout>
+</Window>
