@@ -84,12 +84,14 @@ xcopy src $(TargetDir)src\ /E /Y</Command>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Common\TimerThread.h" />
     <ClInclude Include="APlayerWindow.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Common\TimerThread.cpp" />
     <ClCompile Include="APlayerWindow.cpp" />
     <ClCompile Include="duiAPlayer.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -112,6 +114,9 @@ xcopy src $(TargetDir)src\ /E /Y</Command>
     <Xml Include="WndXml\APlayerWnd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LyricsForm\LyricsForm.vcxproj">
+      <Project>{ac8eda4d-8290-4b69-a92a-4d2fb5e3be2e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\PlayCore\PlayCore.vcxproj">
       <Project>{5b28cb6b-32cc-4798-8365-5e99679e93d7}</Project>
     </ProjectReference>

@@ -12,6 +12,8 @@
 using namespace DuiLib;
 
 #include "..\..\PlayCore\PlayCore.h"
+#include "..\..\LyricsForm\LyricsForm.h"
+#include "..\..\Common\TimerThread.h"
 
 #ifdef _DEBUG
 #   ifdef _UNICODE
@@ -35,17 +37,21 @@ public:
 	CAPlayerWnd()
 	{
 		m_player = CreateController();
+		m_lyricform = CreateLyricFormController();
 	};
 	~CAPlayerWnd()
 	{
 		m_player->Release();
 	};
 	LPCTSTR			GetWindowClassName() const { return _T("APlayerWindow"); }
+	UINT			GetClassStyle() const { return CS_DBLCLKS; }
+	void			OnFinalMessage(HWND /*hWnd*/) { delete this; }
 	void			Notify(TNotifyUI& msg);
 	LRESULT			HandleMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 public:
 	//Handle Message 
+	LRESULT			OnPrepare();
 	LRESULT			OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT			OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT			OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
@@ -53,6 +59,9 @@ public:
 	LRESULT			OnNCCalcsize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT			OnNCPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT			OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	LRESULT			OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	LRESULT			OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	LRESULT			OnNCHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 private:
 	//Button Event
 	LRESULT			PlayButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
@@ -60,15 +69,25 @@ private:
 	LRESULT			AddButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 	LRESULT			LyricButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 private:
+	static VOID APIENTRY lyricTimerFunc(LPVOID lpParam, DWORD /*dwTimerLowValue*/,DWORD /*dwTimerHighValue*/);
+private:
 	void InitControl();
 private:
-	CPaintManagerUI		m_PaintManager;
-	IPlayController*	m_player;
+	CPaintManagerUI			m_PaintManager;
+	IPlayController*		m_player;
+	ILyricFormController*	m_lyricform;
+	CTimerThread			m_lyrictimer;
 private:
 	//controls
 	CButtonUI*			m_pPlayBtn;
 	CButtonUI*			m_pNextBtn;
 	CButtonUI*			m_pAddBtn;
 	CButtonUI*			m_pLyricBtn;
+	//min max close button
+	CButtonUI*			m_pMinBtn;
+	CButtonUI*			m_pMaxBtn;
+	CButtonUI*			m_pRestoreBtn;
+	CButtonUI*			m_pCloseBtn;
+
 };
 #endif
