@@ -65,6 +65,10 @@ std::wstring PlayController::GetLyric()
 			_player.GetPlayMilliseconds()
 			);
 }
+int PlayController::LoadList(const wchar_t* listPath)
+{
+	return _list.LoadList(listPath);
+}
 void PlayController::Release()
 {
 	delete this;

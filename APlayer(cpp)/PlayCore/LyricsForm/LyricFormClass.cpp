@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LyricFormClass.h"
 
+#include <windowsx.h>
 //public method
 BOOL LyricForm::Create(
 	PCWSTR lpWindowName,
@@ -73,11 +74,11 @@ LRESULT	CALLBACK LyricForm::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 }
 LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	LRESULT lRes = 0L;
 	switch (message)
 	{
 	case WM_CREATE:
-		_writeText = LDrawLib::CreateDirect2DDrawText(m_hWnd);
-		//_writeText = LDrawLib::CreateGdiplusDrawText(m_hWnd);
+		lRes = OnCreate(message, wParam, lParam);
 		break;
 	case WM_PAINT:
 		PaintLyric();
@@ -86,6 +87,15 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		_writeText->Release();
 		PostQuitMessage(0);
 		break;
+	case WM_NCPAINT:
+		break;
+	case WM_NCCALCSIZE:
+		break;
+	case WM_NCACTIVATE:
+		lRes = wParam == NULL ? TRUE : FALSE;
+		break;
+	case WM_NCHITTEST:
+		lRes = OnNCHitTest(message, wParam, lParam);
 	case WM_SIZE:
 		_writeText->OnFormChange();
 		break;
@@ -104,7 +114,7 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	default:
 		return DefWindowProc(m_hWnd, message, wParam, lParam);
 	}
-	return 0;
+	return lRes;
 }
 
 //message method
@@ -116,4 +126,32 @@ void LyricForm::PaintLyric()
 	GetClientRect(m_hWnd, &rc);
 	_writeText->WriteText(szLyric, rc, fontsize, fontcolor);
 	EndPaint(m_hWnd, &ps);
+}
+
+LRESULT LyricForm::OnCreate(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	LONG lStyle = ::GetWindowLong(m_hWnd, GWL_STYLE);
+	lStyle &= ~WS_CAPTION;
+	::SetWindowLong(m_hWnd, GWL_STYLE, lStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+	_writeText = LDrawLib::CreateDirect2DDrawText(m_hWnd);
+	//_writeText = LDrawLib::CreateGdiplusDrawText(m_hWnd);
+	return 0;
+}
+
+LRESULT LyricForm::OnNCHitTest(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	POINT pt;
+	pt.x = GET_X_LPARAM(lParam);
+	pt.y = GET_Y_LPARAM(lParam);
+	::ScreenToClient(m_hWnd, &pt);
+
+	RECT rcWnd;
+	::GetClientRect(m_hWnd, &rcWnd);
+	if (pt.x >= rcWnd.left && pt.x < rcWnd.right && \
+		pt.y >= rcWnd.top && pt.y < rcWnd.bottom) {
+		if (true) {
+			return HTCAPTION;
+		}
+	}
+	return HTCLIENT;
 }

@@ -9,7 +9,7 @@
 #include <vector>
 
 //打开文件对话框
-std::vector<std::wstring> showOpenFile()
+std::vector<std::wstring> showOpenFile(const wchar_t* descript = L"音乐文件", const wchar_t* format = SupportType)
 {
 	HRESULT hr = S_OK;
 	std::vector<std::wstring> filePaths;
@@ -40,7 +40,7 @@ std::vector<std::wstring> showOpenFile()
 
 	hr = fileDlg->AddPlace(psi, FDAP_BOTTOM);
 	COMDLG_FILTERSPEC rgSpec[] = {
-		{ L"音乐文件", SupportType }
+		{ descript, format }
 	};
 	fileDlg->SetFileTypes(1, rgSpec);
 
@@ -69,8 +69,56 @@ std::vector<std::wstring> showOpenFile()
 	return filePaths;
 }
 
+std::wstring showSaveList(const wchar_t* descript = L"音乐文件", const wchar_t* format = SupportType)
+{
+	HRESULT hr = S_OK;
+	std::wstring filePath;
 
+	IFileSaveDialog *fileDlg = NULL;
+	hr = CoCreateInstance(CLSID_FileSaveDialog,
+		NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&fileDlg));
+	if (FAILED(hr)) return filePath;
+	ON_SCOPE_EXIT([&] {fileDlg->Release(); });
 
+	IKnownFolderManager *pkfm = NULL;
+	hr = CoCreateInstance(CLSID_KnownFolderManager,
+		NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pkfm));
+	if (FAILED(hr)) return filePath;
+	ON_SCOPE_EXIT([&] {pkfm->Release(); });
+
+	IKnownFolder *pkf = NULL;
+	hr = pkfm->GetFolder(FOLDERID_PublicDesktop, &pkf);
+	if (FAILED(hr)) return filePath;
+	ON_SCOPE_EXIT([&] { pkf->Release(); });
+
+	IShellItem *psi = NULL;
+	hr = pkf->GetShellItem(0, IID_PPV_ARGS(&psi));
+	if (FAILED(hr)) return filePath;
+	ON_SCOPE_EXIT([&] { psi->Release(); });
+
+	hr = fileDlg->AddPlace(psi, FDAP_BOTTOM);
+	COMDLG_FILTERSPEC rgSpec[] = {
+		{ descript, format }
+	};
+	fileDlg->SetFileTypes(1, rgSpec);
+
+	DWORD dwOptions;
+	fileDlg->GetOptions(&dwOptions);
+	fileDlg->SetOptions(dwOptions);
+	hr = fileDlg->Show(NULL);
+	if (SUCCEEDED(hr)) {
+		IShellItem *pRet;
+		hr = fileDlg->GetResult(&pRet);
+		if (SUCCEEDED(hr)) {
+			LPWSTR nameBuffer;
+			pRet->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &nameBuffer);
+			filePath.append(nameBuffer);
+			pRet->Release();
+			CoTaskMemFree(nameBuffer);
+		}
+	}
+	return filePath;
+}
 
 
 //Handle Message
@@ -231,7 +279,18 @@ LRESULT CAPlayerWnd::LyricButton_OnClicked(CControlUI* pSender, TNotifyUI& msg)
 {
 	m_lyricform->LyricForm_Run();
 	m_lyrictimer.CreateTimer(50, lyricTimerFunc, this);
+	m_lyricform->LyricForm_SetColor(0x66ccff, 255);
 	return 0;
+}
+LRESULT CAPlayerWnd::LoadListButton_OnClicked(CControlUI* pSender, TNotifyUI& msg)
+{
+	vector<wstring> listPaths = showOpenFile(L"播放列表", L"*.list");
+	wstring listPath = listPaths[0];
+	if (listPath.length() != 0) {
+		m_player->LoadList(listPath.c_str());
+		return 0;
+	}
+	return -1;
 }
 //private method
 void CAPlayerWnd::InitControl()
@@ -241,6 +300,7 @@ void CAPlayerWnd::InitControl()
 	m_pNextBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("nextButton")));
 	m_pAddBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("addButton")));
 	m_pLyricBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("lyricButton")));
+	m_pLoadListBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("loadlistButton")));
 
 	//caption button
 	m_pMinBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("minButton")));
@@ -295,6 +355,9 @@ void CAPlayerWnd::Notify(TNotifyUI& msg)
 		}
 		else if (msg.pSender == m_pLyricBtn) {
 			LyricButton_OnClicked(m_pLyricBtn, msg);
+		}
+		else if (msg.pSender == m_pLoadListBtn) {
+			LoadListButton_OnClicked(m_pLoadListBtn, msg);
 		}
 		else if (msg.pSender == m_pCloseBtn) {
 			PostQuitMessage(0);

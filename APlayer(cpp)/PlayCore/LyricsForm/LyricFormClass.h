@@ -29,8 +29,8 @@ class LyricForm
 public:
 	HWND m_hWnd;
 	typedef LyricForm ThisType;
-	static const int DefaultWidth = 400;
-	static const int DefaultHeight = 400;
+	static const int DefaultWidth = 320;
+	static const int DefaultHeight = 150;
 public:
 	LyricForm()
 	{
@@ -62,6 +62,8 @@ public:
 
 	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	//Message method
+	LRESULT		OnCreate(UINT message, WPARAM wParam, LPARAM lParam);
+	LRESULT		OnNCHitTest(UINT message, WPARAM wParam, LPARAM lParam);
 	void		PaintLyric();
 	inline void SetLyric(const std::wstring &lyric) { szLyric = lyric; }
 	inline void SetFontSize(float inSize) { fontsize = inSize; }

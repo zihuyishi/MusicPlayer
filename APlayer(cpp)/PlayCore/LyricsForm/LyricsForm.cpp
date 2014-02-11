@@ -48,6 +48,10 @@ public:
 		SendMessageW(_wndMain.m_hWnd, LyricFormCommand::CM_LYRIC, (WPARAM)lyric, NULL);
 	}
 
+	void __stdcall LyricForm_SetColor(DWORD rgb, int a)
+	{
+		SendMessageW(_wndMain.m_hWnd, LyricFormCommand::CM_FONTCOLOR, (WPARAM)rgb, (LPARAM)a);
+	}
 	void __stdcall LyricForm_SendCommand(LyricFormCommand message, WPARAM wParam, LPARAM lParam)
 	{
 		PostMessage(_wndMain.m_hWnd, message, wParam, lParam);

@@ -25,6 +25,7 @@ public:
 	unsigned long	__stdcall GetPlayMilliseconds();
 	void			__stdcall SetLoopMode(LoopMode mode) { _loopmode = mode; }
 	std::wstring	__stdcall GetLyric();
+	int				__stdcall LoadList(const wchar_t* listPath);
 	void			__stdcall Release();
 private:
 	MusicPlayer		_player;

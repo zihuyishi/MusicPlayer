@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Window size="800,600" sizebox="4,4,6,6" roundcorner="5,5" caption="0,0,0,32">
+<Window size="480,320" sizebox="4,4,6,6" roundcorner="5,5" caption="0,0,0,32">
 	<Font name="幼圆" size="16" bold="true" />
   <Default name="Button" 
            value="normalimage=&quot;file='src\button_normal.png' corner='4,2,4,2' fade='200' hsl='true'&quot; pushedimage=&quot;
@@ -35,6 +35,7 @@
         <Button name="nextButton" text="Next" height="20" maxwidth="120"/>
         <Button name="addButton" text="Add" height="20" maxwidth="120"/>
         <Button name="lyricButton" text="ShowLyric" height="20" maxwidth="120"/>
+        <Button name="loadlistButton" text="LoadList" height="20" maxwidth="120" />
       </VerticalLayout>
     </HorizontalLayout>
     

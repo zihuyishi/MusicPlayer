@@ -36,6 +36,7 @@ public:
 	virtual void			__stdcall	SetLoopMode(LoopMode mode) = 0;
 	virtual unsigned long	__stdcall	GetPlayMilliseconds() = 0;
 	virtual std::wstring	__stdcall	GetLyric() = 0;
+	virtual int				__stdcall	LoadList(const wchar_t* listPath) = 0;
 	virtual void			__stdcall	Release() = 0;
 };
 
