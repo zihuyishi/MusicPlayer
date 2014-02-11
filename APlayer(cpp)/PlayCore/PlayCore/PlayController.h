@@ -26,6 +26,7 @@ public:
 	void			__stdcall SetLoopMode(LoopMode mode) { _loopmode = mode; }
 	std::wstring	__stdcall GetLyric();
 	int				__stdcall LoadList(const wchar_t* listPath);
+	int				__stdcall SaveList(const wchar_t* listPath);
 	void			__stdcall Release();
 private:
 	MusicPlayer		_player;

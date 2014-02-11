@@ -69,6 +69,7 @@ private:
 	LRESULT			AddButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 	LRESULT			LyricButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 	LRESULT			LoadListButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
+	LRESULT			SaveListButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 private:
 	static VOID APIENTRY lyricTimerFunc(LPVOID lpParam, DWORD /*dwTimerLowValue*/,DWORD /*dwTimerHighValue*/);
 private:
@@ -85,6 +86,7 @@ private:
 	CButtonUI*			m_pAddBtn;
 	CButtonUI*			m_pLyricBtn;
 	CButtonUI*			m_pLoadListBtn;
+	CButtonUI*			m_pSaveListBtn;
 	//min max close button
 	CButtonUI*			m_pMinBtn;
 	CButtonUI*			m_pMaxBtn;

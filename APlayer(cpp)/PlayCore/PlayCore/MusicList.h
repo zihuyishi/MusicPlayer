@@ -19,7 +19,8 @@ public:
 	BOOL SaveAs(std::wstring filePath);
 	BOOL LoadList(wstring filePath);
 private:
-	vector<MusicFile> _list;
+	vector<MusicFile>	_list;
+	wstring				_listname;
 };
 
 PLAYCORE_END

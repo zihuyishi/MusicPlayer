@@ -36,6 +36,7 @@
         <Button name="addButton" text="Add" height="20" maxwidth="120"/>
         <Button name="lyricButton" text="ShowLyric" height="20" maxwidth="120"/>
         <Button name="loadlistButton" text="LoadList" height="20" maxwidth="120" />
+        <Button name="savelistButton" text="SaveList" height="20" maxwidth="120" />
       </VerticalLayout>
     </HorizontalLayout>
     

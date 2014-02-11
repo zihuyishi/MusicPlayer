@@ -69,6 +69,10 @@ int PlayController::LoadList(const wchar_t* listPath)
 {
 	return _list.LoadList(listPath);
 }
+int PlayController::SaveList(const wchar_t* listPath)
+{
+	return _list.SaveAs(listPath);
+}
 void PlayController::Release()
 {
 	delete this;

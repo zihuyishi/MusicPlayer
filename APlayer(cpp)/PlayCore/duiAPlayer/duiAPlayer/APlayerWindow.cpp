@@ -69,7 +69,7 @@ std::vector<std::wstring> showOpenFile(const wchar_t* descript = L"音乐文件", co
 	return filePaths;
 }
 
-std::wstring showSaveList(const wchar_t* descript = L"音乐文件", const wchar_t* format = SupportType)
+std::wstring showSaveFile(const wchar_t* descript = L"音乐文件", const wchar_t* format = SupportType)
 {
 	HRESULT hr = S_OK;
 	std::wstring filePath;
@@ -292,6 +292,15 @@ LRESULT CAPlayerWnd::LoadListButton_OnClicked(CControlUI* pSender, TNotifyUI& ms
 	}
 	return -1;
 }
+LRESULT CAPlayerWnd::SaveListButton_OnClicked(CControlUI* pSender, TNotifyUI& msg)
+{
+	wstring listPath = showSaveFile(L"播放列表", L"*.list");
+	if (listPath.length() != 0) {
+		m_player->SaveList(listPath.c_str());
+		return 0;
+	}
+	return -1;
+}
 //private method
 void CAPlayerWnd::InitControl()
 {
@@ -301,6 +310,7 @@ void CAPlayerWnd::InitControl()
 	m_pAddBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("addButton")));
 	m_pLyricBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("lyricButton")));
 	m_pLoadListBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("loadlistButton")));
+	m_pSaveListBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("savelistButton")));
 
 	//caption button
 	m_pMinBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("minButton")));
@@ -358,6 +368,9 @@ void CAPlayerWnd::Notify(TNotifyUI& msg)
 		}
 		else if (msg.pSender == m_pLoadListBtn) {
 			LoadListButton_OnClicked(m_pLoadListBtn, msg);
+		}
+		else if (msg.pSender == m_pSaveListBtn) {
+			SaveListButton_OnClicked(m_pSaveListBtn, msg);
 		}
 		else if (msg.pSender == m_pCloseBtn) {
 			PostQuitMessage(0);

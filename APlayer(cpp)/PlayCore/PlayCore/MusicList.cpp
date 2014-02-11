@@ -9,6 +9,7 @@
 PLAYCORE_BEGIN
 MusicList::MusicList()
 {
+	_listname.append(L"Ä¬ÈÏÁÐ±í");
 }
 
 
@@ -20,10 +21,38 @@ BOOL MusicList::SaveAs(wstring filePath)
 {
 	HRESULT hr = S_OK;
 	CComPtr<IXMLDOMDocument> spXmldoc;
-	hr = spXmldoc.CoCreateInstance(__uuidof(DOMDocument60));
-	if (FAILED(hr)) return 0;
-	CComBSTR bstrXml;
-	CComPtr<IXMLDOMElement> spRoot = NULL;
+	do {
+		hr = spXmldoc.CoCreateInstance(__uuidof(DOMDocument60));
+		if (FAILED(hr)) break;
+		CComBSTR bstrXml;
+		CComBSTR bstrNamespaceURI(L"");
+		CComPtr<IXMLDOMElement> pRoot;
+		
+		hr = spXmldoc->createElement(CComBSTR(_listname.c_str()), &pRoot);
+		if (FAILED(hr)) break;
+
+		long listlen = _list.size();
+		for (long index = 0; index < listlen; ++index) {
+			CComPtr<IXMLDOMElement> pMusicNode;
+			CComPtr<IXMLDOMElement> pFilePath;
+			MusicFile musicFile = _list[index];
+			wstring musicPath = musicFile.GetFilePath();
+			spXmldoc->createElement(CComBSTR(L"MusicFile"), &pMusicNode);
+			spXmldoc->createElement(CComBSTR(L"filepath"), &pFilePath);
+			pFilePath->put_text(CComBSTR(musicPath.c_str()));
+			pMusicNode->appendChild(pFilePath, NULL);
+			pRoot->appendChild(pMusicNode, NULL);
+		}
+		
+		hr = spXmldoc->putref_documentElement(pRoot);
+		if (FAILED(hr)) break;
+		hr = spXmldoc->save(CComVariant(filePath.c_str()));
+		if (FAILED(hr)) break;
+
+	} while (0);
+
+	
+
 	return FALSE;
 }
 BOOL MusicList::LoadList(wstring filePath)
@@ -38,23 +67,24 @@ BOOL MusicList::LoadList(wstring filePath)
 		hr = spXmldoc->load(CComVariant(filePath.c_str()), &boolRet);
 		if (FAILED(hr)) break;
 
-		CComPtr<IXMLDOMNodeList> pRootNodes;
-		hr = spXmldoc->get_childNodes(&pRootNodes);
-		if (FAILED(hr)) break;
-
-		CComPtr<IXMLDOMNode> pMusicList;
-		hr = pRootNodes->get_item(1, &pMusicList);
+		CComPtr<IXMLDOMElement> pRoot;
+		hr = spXmldoc->get_documentElement(&pRoot);
 		if (FAILED(hr)) break;
 
 		//================
-		CComBSTR doc;
-		pMusicList->get_xml(&doc);
+		/*
+		CComPtr<IXMLDOMElement> pRoot;
+		spXmldoc->get_documentElement(&pRoot);
+		CComBSTR test;
+		pRoot->get_xml(&test);
+		*/
 		//================
 		CComPtr<IXMLDOMNodeList> pNodeList;
-		hr = pMusicList->get_childNodes(&pNodeList);
+		hr = pRoot->get_childNodes(&pNodeList);
 		if (FAILED(hr)) break;
 		long listlen;
 		hr = pNodeList->get_length(&listlen);
+		if (listlen != 0) _list.clear();
 		for (long i = 0; i < listlen; ++i) {
 			CComPtr<IXMLDOMNode> pNode;
 			hr = pNodeList->get_item(i, &pNode);
