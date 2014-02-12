@@ -26,11 +26,21 @@ int PlayController::AddMusic(const wchar_t* musicPath)
 }
 int PlayController::Play()
 {
-	return _player.Play();
+	if (_list.ListLength() == 0) return FALSE;
+	if (_currentindex == -1) {
+		_currentindex = 0;
+	}
+	_player.SetPlayEndCallback(NULL);
+	BOOL bRet = _player.Play(_list[_currentindex]);
+	if (bRet) {
+		_player.SetPlayEndCallback(onPlayEnd, this);
+	}
+	return bRet;
+
 }
 int PlayController::Continue()
 {
-	return _player.Play();
+	return _player.Continue();
 }
 int PlayController::Pause()
 {
@@ -46,12 +56,8 @@ int	PlayController::SetVolume(int value)
 }
 int PlayController::PlayNext()
 {
-	_player.SetPlayEndCallback(NULL);
-	int index = this->getNextIndex();
-	if (index == -1) return 0;
-	_player.Play(_list[index]);
-	_player.SetPlayEndCallback(onPlayEnd, this);
-	return TRUE;
+	_currentindex = this->getNextIndex();
+	return this->Play();
 }
 unsigned long PlayController::GetPlayMilliseconds()
 {

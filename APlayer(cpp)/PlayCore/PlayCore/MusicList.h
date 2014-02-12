@@ -18,6 +18,9 @@ public:
 	int ListLength() const { return _list.size(); }
 	BOOL SaveAs(std::wstring filePath);
 	BOOL LoadList(wstring filePath);
+	void Put_ListName(const wstring& listName) { _listname = listName; }
+	wstring Get_ListName() const { return _listname; }
+	void Clear() { _list.clear(); _listname = L"Ä¬ÈÏÁÐ±í"; }
 private:
 	vector<MusicFile>	_list;
 	wstring				_listname;

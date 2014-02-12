@@ -17,7 +17,7 @@ MusicPlayer::~MusicPlayer()
 	_player->Release();
 }
 
-BOOL MusicPlayer::Play()
+BOOL MusicPlayer::Continue()
 {
 	return _player->Play();
 }
@@ -39,7 +39,7 @@ BOOL MusicPlayer::_play(const wstring& filePath)
 	bret = _player->Close();
 	bret = _player->OpenFileW(filePath.c_str(), TStreamFormat::sfAutodetect);
 	if (!bret) return bret;
-	bret = this->Play();
+	bret = _player->Play();
 	_bPlayEnd = FALSE;
 	return bret;
 }

@@ -11,7 +11,7 @@ public:
 	~MusicPlayer();
 public:
 	//just call ZPlay.play()
-	BOOL			Play();
+	BOOL			Continue();
 	//play a new file
 	BOOL			Play(const wchar_t* filePath);
 	BOOL			Play(const MusicFile &musicFile);
