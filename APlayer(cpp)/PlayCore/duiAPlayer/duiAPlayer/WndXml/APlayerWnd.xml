@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Window size="480,320" sizebox="4,4,6,6" roundcorner="5,5" caption="0,0,0,32">
+<Window size="527,689" sizebox="4,4,6,6" roundcorner="5,5" caption="0,0,0,32" alpha="220">
 	<Font name="幼圆" size="16" bold="true" />
   <Default name="Button" 
            value="normalimage=&quot;file='src\button_normal.png' corner='4,2,4,2' fade='200' hsl='true'&quot; pushedimage=&quot;
            file='src\button_pushed.png' corner='4,2,4,2' fade='200' hsl='true'&quot; hotimage=&quot;
            file='src\button_hover.png' corner='4,2,4,2' fade='200' hsl='true'&quot; " />
-  
-  <VerticalLayout bkcolor="#FFF0F0F0" bkcolor2="#FFAAAAA0" bordersize="1" inset="1,0,1,0">
+
+  <VerticalLayout bkcolor="#FF66CCFF" bordersize="0" inset="0,0,0,0">
     <!-- 标题栏 -->
     <HorizontalLayout height="32">
       <!-- 图标和标题 -->
@@ -22,7 +22,7 @@
                 normalimage="file='src\sys_dlg_max.png' source='52,0,78,17'" hotimage="file='src\sys_dlg_max.png' source='26,0,52,18'" pushedimage="file='src\sys_dlg_max.png' source='0,0,26,17'"/>
         <Button name="restoreButton" tooltip="还原" float="true" pos="25,5,50,22" maxwidth="26" visible="false"
                 normalimage="file='src\sys_dlg_restore.png' source='52,0,78,17'" hotimage="file='src\sys_dlg_restore.png' source='26,0,52,17'" pushedimage="file='src\sys_dlg_restore.png' source='0,0,26,17'"/>
-        <Button name="closeButton" tooltip="关闭" float="true" pos="50,5,75,22" maxwidth="26" 
+        <Button name="closeButton" tooltip="关闭" float="true" pos="50,5,75,22" maxwidth="26"
                 normalimage="file='src\sys_dlg_close.png' source='90,0,135,17'" hotimage="file='src\sys_dlg_close.png' source='45,0,90,17'" pushedimage="file='src\sys_dlg_close.png' source='0,0,45,17'"/>
       </HorizontalLayout>
     </HorizontalLayout>
@@ -30,16 +30,19 @@
     <!-- 客户区 -->
     <HorizontalLayout>
       <!-- 播放器控制按钮 -->
-      <VerticalLayout bkcolor="#FF66CCFF">
+      <VerticalLayout name="backLayout" bkimage="file='src\backform.png' " >
         <Button name="playButton" text="Play" height="20" maxwidth="120"/>
         <Button name="nextButton" text="Next" height="20" maxwidth="120"/>
         <Button name="addButton" text="Add" height="20" maxwidth="120"/>
         <Button name="lyricButton" text="ShowLyric" height="20" maxwidth="120"/>
         <Button name="loadlistButton" text="LoadList" height="20" maxwidth="120" />
         <Button name="savelistButton" text="SaveList" height="20" maxwidth="120" />
+        <Button name="bkimgButton" text="背景图片"  height="20" maxwidth="120" />
       </VerticalLayout>
     </HorizontalLayout>
-    
+
   </VerticalLayout>
+
+
   
 </Window>

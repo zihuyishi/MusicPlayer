@@ -144,6 +144,7 @@ LRESULT CAPlayerWnd::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 }
 LRESULT CAPlayerWnd::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
+	m_player->Release();
 	bHandled = FALSE;
 	return 0;
 }
@@ -237,8 +238,8 @@ LRESULT	CAPlayerWnd::OnNCHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 		&& pt.y >= rcCaption.top && pt.y < rcCaption.bottom) {
 		CControlUI* pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(pt));
 		if (pControl && _tcscmp(pControl->GetClass(), _T("ButtonUI")) != 0 &&
-			_tcscmp(pControl->GetClass(), _T("OptionUI")) != 0 &&
-			_tcscmp(pControl->GetClass(), _T("TextUI")) != 0)
+			_tcscmp(pControl->GetClass(), _T("OptionUI")) != 0/* &&
+			_tcscmp(pControl->GetClass(), _T("TextUI")) != 0*/)
 			return HTCAPTION;
 	}
 
@@ -284,7 +285,8 @@ LRESULT CAPlayerWnd::LyricButton_OnClicked(CControlUI* pSender, TNotifyUI& msg)
 }
 LRESULT CAPlayerWnd::LoadListButton_OnClicked(CControlUI* pSender, TNotifyUI& msg)
 {
-	vector<wstring> listPaths = showOpenFile(L"播放列表", L"*.list");
+	auto listPaths = showOpenFile(L"播放列表", L"*.list");
+	if (listPaths.size() == 0) return -1;
 	wstring listPath = listPaths[0];
 	if (listPath.length() != 0) {
 		m_player->LoadList(listPath.c_str());
@@ -301,6 +303,21 @@ LRESULT CAPlayerWnd::SaveListButton_OnClicked(CControlUI* pSender, TNotifyUI& ms
 	}
 	return -1;
 }
+LRESULT CAPlayerWnd::BKImgButton_OnClicked(CControlUI* pSender, TNotifyUI& msg)
+{
+	auto files = showOpenFile(L"图片文件", L"*.png;*.bmp;*.jpg;");
+	if (files.size() != 0) {
+		auto filePath = files[0];
+		/*
+		Bitmap bitmap(filePath.c_str());
+		auto height = bitmap.GetHeight();
+		auto width = bitmap.GetWidth();
+		*/
+		m_pBackLayout->SetBkImage(filePath.c_str());
+		return 0;
+	}
+	return -1;
+}
 //private method
 void CAPlayerWnd::InitControl()
 {
@@ -311,12 +328,16 @@ void CAPlayerWnd::InitControl()
 	m_pLyricBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("lyricButton")));
 	m_pLoadListBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("loadlistButton")));
 	m_pSaveListBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("savelistButton")));
+	m_pBKImgBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("bkimgButton")));
 
 	//caption button
 	m_pMinBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("minButton")));
 	m_pMaxBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("maxButton")));
 	m_pRestoreBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("restoreButton")));
 	m_pCloseBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("closeButton")));
+
+	//Layout
+	m_pBackLayout = static_cast<CContainerUI*>(m_PaintManager.FindControl(_T("backLayout")));
 }
 VOID CAPlayerWnd::lyricTimerFunc(LPVOID lpParam, DWORD /*dwTimerLowValue*/, DWORD /*dwTimerHighValue*/)
 {
@@ -372,6 +393,9 @@ void CAPlayerWnd::Notify(TNotifyUI& msg)
 		else if (msg.pSender == m_pSaveListBtn) {
 			SaveListButton_OnClicked(m_pSaveListBtn, msg);
 		}
+		else if (msg.pSender == m_pBKImgBtn) {
+			BKImgButton_OnClicked(m_pBKImgBtn, msg);
+		}
 		else if (msg.pSender == m_pCloseBtn) {
 			PostQuitMessage(0);
 			return;
@@ -385,7 +409,6 @@ void CAPlayerWnd::Notify(TNotifyUI& msg)
 		else if (msg.pSender = m_pRestoreBtn) {
 			SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
 		}
-
 
 	}
 }

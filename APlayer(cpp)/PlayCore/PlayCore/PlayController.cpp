@@ -81,7 +81,9 @@ int PlayController::SaveList(const wchar_t* listPath)
 }
 void PlayController::Release()
 {
-	delete this;
+	if (this) {
+		delete this;
+	}
 }
 
 

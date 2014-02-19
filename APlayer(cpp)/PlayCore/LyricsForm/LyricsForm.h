@@ -22,6 +22,7 @@ enum LyricFormCommand {
 	CM_FONTSIZE		= 0x8002,	//设置歌词文字大小，@WPARAM 字体大小
 	CM_BACKCOLOR	= 0x8003,	//设置窗口背景颜色，
 	CM_BACKIMAGE	= 0x8004,	//设置窗口背景图片，
+	CM_CLOSE		= 0x8005,	//关闭
 };
 typedef void(__stdcall *LYRICFORM_CALLBACK)(HWND hWnd, void *lpParam);
 class ILyricFormController {
@@ -30,6 +31,7 @@ public:
 	virtual void __stdcall LyricForm_SetLyric(const wchar_t*) = 0;
 	virtual void __stdcall LyricForm_SetColor(DWORD rgb, int a) = 0;
 	virtual void __stdcall LyricForm_SendCommand(LyricFormCommand, WPARAM, LPARAM) = 0;
+	virtual void __stdcall Release() = 0;
 };
 
 LYRIC_API ILyricFormController* __stdcall CreateLyricFormController();

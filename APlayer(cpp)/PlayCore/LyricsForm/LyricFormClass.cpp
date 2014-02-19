@@ -111,6 +111,9 @@ LRESULT LyricForm::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_FONTSIZE:
 		SetFontSize((float)wParam);
 		break;
+	case CM_CLOSE:
+		PostQuitMessage(0);
+		break;
 	default:
 		return DefWindowProc(m_hWnd, message, wParam, lParam);
 	}

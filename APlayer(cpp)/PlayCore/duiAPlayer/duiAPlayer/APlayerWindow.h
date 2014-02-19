@@ -42,6 +42,8 @@ public:
 	~CAPlayerWnd()
 	{
 		m_player->Release();
+		m_lyricform->Release();
+		m_lyrictimer.KillTimer();
 	};
 	LPCTSTR			GetWindowClassName() const { return _T("APlayerWindow"); }
 	UINT			GetClassStyle() const { return CS_DBLCLKS; }
@@ -70,6 +72,7 @@ private:
 	LRESULT			LyricButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 	LRESULT			LoadListButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 	LRESULT			SaveListButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
+	LRESULT			BKImgButton_OnClicked(CControlUI* pSender, TNotifyUI& msg);
 private:
 	static VOID APIENTRY lyricTimerFunc(LPVOID lpParam, DWORD /*dwTimerLowValue*/,DWORD /*dwTimerHighValue*/);
 private:
@@ -87,11 +90,14 @@ private:
 	CButtonUI*			m_pLyricBtn;
 	CButtonUI*			m_pLoadListBtn;
 	CButtonUI*			m_pSaveListBtn;
+	CButtonUI*			m_pBKImgBtn;
 	//min max close button
 	CButtonUI*			m_pMinBtn;
 	CButtonUI*			m_pMaxBtn;
 	CButtonUI*			m_pRestoreBtn;
 	CButtonUI*			m_pCloseBtn;
 
+	//Layout
+	CContainerUI*		m_pBackLayout;
 };
 #endif

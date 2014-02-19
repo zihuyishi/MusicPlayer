@@ -56,7 +56,11 @@ public:
 	{
 		PostMessage(_wndMain.m_hWnd, message, wParam, lParam);
 	}
-
+	void __stdcall Release()
+	{
+		PostMessage(_wndMain.m_hWnd, LyricFormCommand::CM_CLOSE, NULL, NULL);
+		delete this;
+	}
 
 private:
 	static DWORD WINAPI LyricFormThread(LPVOID lpParam)
